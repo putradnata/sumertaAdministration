@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateWebsiteContentsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('website_contents', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('visi');
+            $table->text('misi');
+            $table->string('lokasiDesa');
+            $table->text('logoDesa');
+            $table->text('sliderPhoto');
+            $table->string('sliderTextH1');
+            $table->string('sliderTextH2');
+            $table->unsignedBigInteger('idUser');
+            $table->timestamps();
+            $table->softDeletes();
+
+
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('website_contents');
+    }
+}
