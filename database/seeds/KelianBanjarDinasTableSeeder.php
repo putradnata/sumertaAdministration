@@ -15,6 +15,7 @@ class KelianBanjarDinasTableSeeder extends Seeder
     {
         $data = [
             [
+                'idBanjar' => '1',
                 'NIK' => '5171021810720005',
                 'noTelp' => '081234567890',
                 'mulaiMenjabat' => '2016/01/01',
@@ -22,6 +23,7 @@ class KelianBanjarDinasTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
             ],
             [
+                'idBanjar' => '2',
                 'NIK' => '5171020104700002',
                 'noTelp' => '081234567890',
                 'mulaiMenjabat' => '2016/01/01',

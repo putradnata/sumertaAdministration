@@ -129,6 +129,7 @@ class HomeController extends Controller
         return view('penduduk/index',[
             'keluarga' => $selectKeluarga,
             'surat' => $selectSurat,
+            'getPenduduk' => $getPenduduk,
         ]);
     }
 

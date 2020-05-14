@@ -14,7 +14,9 @@ class JenisSuratController extends Controller
      */
     public function index()
     {
-        //
+        $surat = JenisSurat::all();
+
+        return view('operator/jenissurat.index',['surat'=>$surat]);
     }
 
     /**
@@ -24,7 +26,13 @@ class JenisSuratController extends Controller
      */
     public function create()
     {
-        //
+        $surat = new JenisSurat();
+
+        $request = (object) $surat->getDefaultValues();
+
+        return view('operator/jenissurat.form',[
+            'request' => $request
+        ]);
     }
 
     /**
@@ -35,7 +43,17 @@ class JenisSuratController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'jenis' => $request->jenisSurat,
+        ];
+
+        $insertSurat = JenisSurat::create($data);
+
+        if($insertSurat){
+            return redirect('operator/data-surat')->with('success','Data Surat Berhasil Tersimpan');
+        }else{
+            return redirect('operator/data-surat')->with('error','Terjadi Kesalahan Saat Menyimpan Data');
+        }
     }
 
     /**
@@ -44,9 +62,11 @@ class JenisSuratController extends Controller
      * @param  \App\JenisSurat  $jenisSurat
      * @return \Illuminate\Http\Response
      */
-    public function show(JenisSurat $jenisSurat)
+    public function show($id)
     {
-        //
+        // $findSurat = JenisSurat::where('id',$id)->get();
+
+        // return view('operator/jenissurat.dataModal', ['selectSurat' => $findSurat])->render();
     }
 
     /**
@@ -55,9 +75,16 @@ class JenisSuratController extends Controller
      * @param  \App\JenisSurat  $jenisSurat
      * @return \Illuminate\Http\Response
      */
-    public function edit(JenisSurat $jenisSurat)
+    public function edit($id)
     {
-        //
+        $suratFind = JenisSurat::findOrFail($id);
+
+        $request = (object) $suratFind;
+
+        return view('operator/jenissurat.form',[
+            'suratFind' => $suratFind,
+            'request' => $request
+        ]);
     }
 
     /**
@@ -67,9 +94,22 @@ class JenisSuratController extends Controller
      * @param  \App\JenisSurat  $jenisSurat
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JenisSurat $jenisSurat)
+    public function update(Request $request, $id)
     {
-        //
+        $surat = new JenisSurat();
+
+        $data = [
+            'jenis' => $request->jenisSurat,
+        ];
+
+        $update = $surat::where('id',$id)
+                    ->update($data);
+
+        if($update){
+            return redirect('operator/data-surat')->with('success','Data Surat Berhasil Diperbaharui');
+        }else{
+            return redirect('operator/data-surat')->with('error','Terjadi Kesalahan Saat Memperbaharui Data');
+        }
     }
 
     /**
@@ -78,8 +118,16 @@ class JenisSuratController extends Controller
      * @param  \App\JenisSurat  $jenisSurat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JenisSurat $jenisSurat)
+    public function destroy($id)
     {
-        //
+        $surat = new JenisSurat();
+
+        $destroy = $surat::where('id',$id)->delete();
+
+        if($destroy){
+            return redirect('operator/data-surat')->with('success','Data Surat Berhasil Dihapus');
+        }else{
+            return redirect('operator/data-surat')->with('error','Terjadi Kesalahan saat Penghapusan');
+        }
     }
 }

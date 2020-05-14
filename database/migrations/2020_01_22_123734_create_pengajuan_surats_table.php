@@ -17,7 +17,7 @@ class CreatePengajuanSuratsTable extends Migration
             $table->string('noSurat', 30)->primary();
             $table->char('NIK', 16);
             $table->unsignedBigInteger('idJenisSurat');
-            $table->unsignedBigInteger('idKelianDinas');
+            $table->unsignedBigInteger('idBanjar');
             $table->enum('status', ['-1','D', 'KBD', 'KD', 'S']);
             $table->unsignedBigInteger('idUser')->nullable();
             $table->string('pathKK')->nullable();
@@ -25,7 +25,7 @@ class CreatePengajuanSuratsTable extends Migration
 
             $table->foreign('NIK')->references('NIK')->on('penduduk')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('idJenisSurat')->references('id')->on('jenis_surat')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('idKelianDinas')->references('id')->on('kelian_banjar_dinas')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('idBanjar')->references('id')->on('banjar')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

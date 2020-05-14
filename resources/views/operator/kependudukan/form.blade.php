@@ -194,18 +194,18 @@
                             <label for="pendidikanTerakhir">Pendidikan Terakhir</label>
                             <select class="form-control" id="pendidikanTerakhir" name="pendidikanTerakhir">
                                 <option value=""> ------</option>
-                                <option value="TDKSEKOLAH" {{ old('pendidikanTerakhir') == 'TDKSEKOLAH' ? "checked" : $request->pendidikanTerakhir == "TDKSEKOLAH" ? "selected" : "" }}>Tidak Sekolah</option>
-                                <option value="SD" {{ old('pendidikanTerakhir') == 'SD' ? "checked" : $request->pendidikanTerakhir == "SD" ? "selected" : "" }}>Sekolah Dasar</option>
-                                <option value="SMP" {{ old('pendidikanTerakhir') == 'SMP' ? "checked" : $request->pendidikanTerakhir == "SMP" ? "selected" : "" }}>Sekolah Menengah Pertama</option>
-                                <option value="SMA" {{ old('pendidikanTerakhir') == 'SMA' ? "checked" : $request->pendidikanTerakhir == "SMA" ? "selected" : "" }}>Sekolah Menengah Atas</option>
-                                <option value="SMK" {{ old('pendidikanTerakhir') == 'SMK' ? "checked" : $request->pendidikanTerakhir == "SMK" ? "selected" : "" }}>Sekolah Menengah Kejuruan</option>
-                                <option value="DIPLOMA-I" {{ old('pendidikanTerakhir') == 'DIPLOMA-I' ? "checked" : $request->pendidikanTerakhir == "DIPLOMA-I" ? "selected" : "" }}>Diploma I</option>
-                                <option value="DIPLOMA-II" {{ old('pendidikanTerakhir') == 'DIPLOMA-II' ? "checked" : $request->pendidikanTerakhir == "DIPLOMA-II" ? "selected" : "" }}>Diploma II</option>
-                                <option value="DIPLOMA-III" {{ old('pendidikanTerakhir') == 'DIPLOMA-III' ? "checked" : $request->pendidikanTerakhir == "DIPLOMA-III" ? "selected" : "" }}>Diploma III</option>
-                                <option value="STRATA-1" {{ old('pendidikanTerakhir') == 'STRATA-1' ? "checked" : $request->pendidikanTerakhir == "STRATA-1" ? "selected" : "" }}>Strata I</option>
-                                <option value="STRATA-2" {{ old('pendidikanTerakhir') == 'STRATA-2' ? "checked" : $request->pendidikanTerakhir == "STRATA-2" ? "selected" : "" }}>Strata II</option>
-                                <option value="STRATA-3" {{ old('pendidikanTerakhir') == 'STRATA-3' ? "checked" : $request->pendidikanTerakhir == "STRATA-3" ? "selected" : "" }}>Strata III</option>
-                                <option value="lainnya" {{ old('pendidikanTerakhir') == 'lainnya' ? "checked" : $request->pendidikanTerakhir == "lainnya" ? "selected" : "" }}>Lain - lain</option>
+                                <option value="TDKSEKOLAH" {{ old('pendidikanTerakhir') == 'TDKSEKOLAH' ? "selected" : $request->pendidikanTerakhir == "TDKSEKOLAH" ? "selected" : "" }}>Tidak Sekolah</option>
+                                <option value="SD" {{ old('pendidikanTerakhir') == 'SD' ? "selected" : $request->pendidikanTerakhir == "SD" ? "selected" : "" }}>Sekolah Dasar</option>
+                                <option value="SMP" {{ old('pendidikanTerakhir') == 'SMP' ? "selected" : $request->pendidikanTerakhir == "SMP" ? "selected" : "" }}>Sekolah Menengah Pertama</option>
+                                <option value="SMA" {{ old('pendidikanTerakhir') == 'SMA' ? "selected" : $request->pendidikanTerakhir == "SMA" ? "selected" : "" }}>Sekolah Menengah Atas</option>
+                                <option value="SMK" {{ old('pendidikanTerakhir') == 'SMK' ? "selected" : $request->pendidikanTerakhir == "SMK" ? "selected" : "" }}>Sekolah Menengah Kejuruan</option>
+                                <option value="DIPLOMA-I" {{ old('pendidikanTerakhir') == 'DIPLOMA-I' ? "selected" : $request->pendidikanTerakhir == "DIPLOMA-I" ? "selected" : "" }}>Diploma I</option>
+                                <option value="DIPLOMA-II" {{ old('pendidikanTerakhir') == 'DIPLOMA-II' ? "selected" : $request->pendidikanTerakhir == "DIPLOMA-II" ? "selected" : "" }}>Diploma II</option>
+                                <option value="DIPLOMA-III" {{ old('pendidikanTerakhir') == 'DIPLOMA-III' ? "selected" : $request->pendidikanTerakhir == "DIPLOMA-III" ? "selected" : "" }}>Diploma III</option>
+                                <option value="STRATA-1" {{ old('pendidikanTerakhir') == 'STRATA-1' ? "selected" : $request->pendidikanTerakhir == "STRATA-1" ? "selected" : "" }}>Strata I</option>
+                                <option value="STRATA-2" {{ old('pendidikanTerakhir') == 'STRATA-2' ? "selected" : $request->pendidikanTerakhir == "STRATA-2" ? "selected" : "" }}>Strata II</option>
+                                <option value="STRATA-3" {{ old('pendidikanTerakhir') == 'STRATA-3' ? "selected" : $request->pendidikanTerakhir == "STRATA-3" ? "selected" : "" }}>Strata III</option>
+                                <option value="lainnya" {{ old('pendidikanTerakhir') == 'lainnya' ? "selected" : $request->pendidikanTerakhir == "lainnya" ? "selected" : "" }}>Lain - lain</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-4">
@@ -223,7 +223,11 @@
                     <div class="row">
                         <div class="form-group col-sm-4 pendidikanLainnya">
                             <label for="pendidikanLainnya">Lainnya</label>
-                            <input class="form-control" id="pendidikanLainnya" type="text" name="pendidikanLainnya" value="{{ old('pendidikanLainnya',$request->pendidikanTerakhir) }}">
+                            @if(($request->pendidikanTerakhir == 'TDKSEKOLAH')||($request->pendidikanTerakhir == 'SD')||($request->pendidikanTerakhir == 'SMP')||($request->pendidikanTerakhir == 'SMA')||($request->pendidikanTerakhir == 'SMK')||($request->pendidikanTerakhir == 'DIPLOMA-I')||($request->pendidikanTerakhir == 'DIPLOMA-II')||($request->pendidikanTerakhir == 'DIPLOMA-III')||($request->pendidikanTerakhir == 'STRATA-1')||($request->pendidikanTerakhir == 'STRATA-2')||($request->pendidikanTerakhir == 'STRATA-3'))
+                            <input class="form-control" id="pendidikanLainnya" type="text" name="pendidikanLainnya" value="">
+                            @else
+                                <input class="form-control" id="pendidikanLainnya" type="text" name="pendidikanLainnya" value="{{ old('pendidikanLainnya',$request->pendidikanTerakhir) }}">
+                            @endif
                         </div>
                     </div>
 
@@ -248,7 +252,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-sm-2">
+                        {{-- <div class="form-group col-sm-2">
                             <label for="street">Rumah Tangga Miskin</label>
                             <div class="col-md-9 col-form-label">
                                 <div class="form-check form-check-inline">
@@ -257,7 +261,7 @@
                                     <label class="form-check-label" for="rumahTanggaMiskin"> <label class="mr-2"></label>Ya</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
 
@@ -273,6 +277,11 @@
 <script>
     // Init Hidden
     $(".pendidikanLainnya").attr('hidden', true);
+
+    // when pendidikan lainnya not null
+    if($("#pendidikanTerakhir").val() == ""){
+        $(".pendidikanLainnya").attr('hidden', false);
+    }
 
     $(document).ready(function () {
         $("#pendidikanTerakhir").change(function () {

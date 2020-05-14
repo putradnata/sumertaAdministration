@@ -21,6 +21,12 @@ Route::group(['middleware' => 'operator'], function () {
         //Website Manager
         Route::resource('/manajer-website','WebsiteContentController');
 
+        //Jenis surat
+        Route::resource('data-surat','JenisSuratController');
+
+        //Incoming Letter
+        Route::get('surat-masuk','OperatorLetterActivity@incomingLetter');
+
     });
 });
 
@@ -38,6 +44,9 @@ Route::group(['middleware' => 'penduduk'], function () {
 
         //fetchDataPenduduk
         Route::get('/fetchData/{id}','HomeController@fetchData');
+
+        //pengajuan surat
+        Route::resource('pengajuan-surat','PengajuanSuratController');
     });
 });
 
@@ -51,7 +60,7 @@ Route::group(['middleware' => 'penduduk'], function () {
 
 Auth::routes();
 
-// Route::get('/', 'HomeController@index');
+// // Route::get('/', 'HomeController@index');
 
 Route::get('/','WebsiteController@index');
 
@@ -65,3 +74,5 @@ Route::get('/staging/test', function(){
 Route::get('/staging/surat',function(){
     return view('layouts.surat');
 });
+
+// Route::get('/staging/surat-masuk','OperatorLetterActivity@incomingLetter');

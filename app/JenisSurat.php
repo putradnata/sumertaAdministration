@@ -16,4 +16,10 @@ class JenisSurat extends Model
     protected $table = 'jenis_surat';
 
     protected $guarded = ['id','created_at','updated_at'];
+
+    public function getDefaultValues(){
+        return [
+            'jenis' => '',
+        ];
+    }
 }

@@ -36,16 +36,16 @@
 
                 <table id="tablePenduduk" class="table table-bordered table-striped" cellspacing="0">
                     <thead>
-                    <tr style="text-align:center;">
-                        <th>No.</th>
-                        <th>NIK</th>
-                        <th>Nama</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Tempat, Tanggal Lahir</th>
-                        <th>Banjar</th>
-                        <th>Nomor KK</th>
-                        <th>Aksi</th>
-                    </tr>
+                        <tr style="text-align:center;">
+                            <th>No.</th>
+                            <th>NIK</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Tempat, Tanggal Lahir</th>
+                            <th>Banjar</th>
+                            <th>Nomor KK</th>
+                            <th>Aksi</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($penduduk as $pddk => $pdList)

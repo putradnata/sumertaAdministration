@@ -15,15 +15,7 @@ class JenisSuratTableSeeder extends Seeder
     {
         $data = [
             [
-                'jenis' => 'Surat Pengantar KTP',
-                'created_at' => Carbon::now(),
-            ],
-            [
                 'jenis' => 'Surat Keterangan Belum Kawin',
-                'created_at' => Carbon::now(),
-            ],
-            [
-                'jenis' => 'Surat Kelakuan Baik',
                 'created_at' => Carbon::now(),
             ],
             [

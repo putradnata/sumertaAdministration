@@ -15,6 +15,7 @@ class CreateKelianBanjarDinasTable extends Migration
     {
         Schema::create('kelian_banjar_dinas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('idBanjar');
             $table->string('NIK', 16);
             $table->char('noTelp', 13);
             $table->date('mulaiMenjabat');
@@ -22,6 +23,7 @@ class CreateKelianBanjarDinasTable extends Migration
             $table->timestamps();
 
             $table->foreign('NIK')->references('NIK')->on('penduduk')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('idBanjar')->references('id')->on('banjar')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

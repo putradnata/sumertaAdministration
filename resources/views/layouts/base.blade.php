@@ -110,9 +110,6 @@
                                         <a href="#">Penduduk Pindah</a>
                                     </li>
                                     <li>
-                                        <a href="#">Penduduk Pendatang</a>
-                                    </li>
-                                    <li>
                                         <a href="#">Penduduk Pindah</a>
                                     </li>
                                 </ul>
@@ -134,7 +131,7 @@
                         </a>
                         <ul class="sidenav-second-level collapse" id="layouts" data-parent="#accordion">
                             <li> <a href="#">Surat Masuk</a></li>
-                            <li> <a href="#">Jenis Surat</a> </li>
+                            <li> <a href="{{ route('data-surat.index') }}">Jenis Surat</a> </li>
                             <li> <a href="#">Jurnal Surat</a></li>
                         </ul>
                     </li>
@@ -153,7 +150,7 @@
                 <ul class="navbar-nav left-side-nav" id="accordion">
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Halaman Utama">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/penduduk">
                             <i class="vl_dashboard"></i>
                             <span class="nav-link-text">Halaman Utama</span>
                         </a>
