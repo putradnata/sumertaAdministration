@@ -223,20 +223,6 @@
             $("#contentKeluarga").attr('hidden',false);
             $("#contentSurat").attr('hidden',true);
 
-            // var noKKPenduduk = $("#noKKPenduduk").val();
-
-            // $.ajax({
-            //     url: "/penduduk/dataKeluarga",
-            //     type: "GET",
-            //     data: {
-            //         noKK : noKKPenduduk,
-            //     },
-            //     cache: false,
-            //     success: function(response){
-            //         $("#tbodyKeluarga").html(response);
-            //     }
-            // })
-
         });
     });
 </script>

@@ -67,9 +67,6 @@ Route::group(['middleware' => 'penduduk'], function () {
 
 /* End With Middleware */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 //Website
 
@@ -81,13 +78,13 @@ Route::get('/','WebsiteController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/* Staging Route  */
-Route::get('/staging/test', function(){
-    return view('layouts.base');
-});
+// /* Staging Route  */
+// Route::get('/staging/test', function(){
+//     return view('layouts.base');
+// });
 
-Route::get('/staging/surat',function(){
-    return view('penduduk/data-surat.letter-tracking');
-});
+// Route::get('/staging/surat',function(){
+//     return view('penduduk/data-surat.letter-tracking');
+// });
 
-// Route::get('/staging/surat-masuk','OperatorLetterActivity@incomingLetter');
+// // Route::get('/staging/surat-masuk','OperatorLetterActivity@incomingLetter');

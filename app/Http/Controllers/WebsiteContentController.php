@@ -109,13 +109,7 @@ class WebsiteContentController extends Controller
      */
     public function edit($id)
     {
-        // $findContent = WebsiteContent::findOrFail($id);
-
-        // $request = (object) $findContent;
-
-        // return view('operator/websiteManager.index', [
-        //             'findContent' => $findContent, 'request' => $request
-        //         ]);
+        
     }
 
     /**
@@ -191,79 +185,6 @@ class WebsiteContentController extends Controller
         }else{
             return redirect('operator/manajer-website')->with('error', 'Terjadi Kesalahan');
         }
-
-        // if($request->file('logoDesa') == null){
-
-            // $sliderPhoto = $request->file('sliderPhoto');
-
-            // $sliderPhotoPictName = time()."_"."Slider-Photo-Desa-Sumerta-Kaja".".".$request->sliderPhoto->extension();
-
-            // $sliderPhoto->move('images',$sliderPhotoPictName);
-
-            // WebsiteContent::where('id',$id)
-            //     ->update([
-            //     'visi' => $request->visidesa,
-            //     'misi' => $request->misidesa,
-            //     'lokasiDesa' => $request->lokasiDesa,
-            //     'logoDesa' => $request->logoDesaName,
-            //     'sliderPhoto' => $sliderPhotoPictName,
-            //     'sliderTextH1' => $request->sliderTextH1,
-            //     'sliderTextH2' => $request->sliderTextH2,
-            //     'idUser' => \Auth::user()->id
-            // ]);
-
-            // return redirect('operator/manajer-website')->with('success', 'Konten Website Berhasil Diperbaharui');
-
-        // }else if($request->file('sliderPhoto') == null){
-            // $logoDesa = $request->file('logoDesa');
-
-            // $logoDesaPictName = time()."_"."Logo-Desa-Sumerta-Kaja".".".$request->logoDesa->extension();
-
-            // $logoDesa->move('images',$logoDesaPictName);
-
-
-            // WebsiteContent::where('id',$id)
-            //     ->update([
-            //     'visi' => $request->visidesa,
-            //     'misi' => $request->misidesa,
-            //     'lokasiDesa' => $request->lokasiDesa,
-            //     'logoDesa' => $logoDesaPictName,
-            //     'sliderPhoto' => $request->sliderPhotoName,
-            //     'sliderTextH1' => $request->sliderTextH1,
-            //     'sliderTextH2' => $request->sliderTextH2,
-            //     'idUser' => \Auth::user()->id
-            // ]);
-
-            // return redirect('operator/manajer-website')->with('success', 'Konten Website Berhasil Diperbaharui');
-
-        // }else if(($request->file('logoDesa') == null) && ($request->file('sliderPhoto') == null)){
-            // $logoDesa = $request->file('logoDesa');
-            // $sliderPhoto = $request->file('sliderPhoto');
-
-            // $logoDesaPictName = time()."_"."Logo-Desa-Sumerta-Kaja".".".$request->logoDesa->extension();
-            // $sliderPhotoPictName = time()."_"."Slider-Photo-Desa-Sumerta-Kaja".".".$request->sliderPhoto->extension();
-
-            // $logoDesa->move('images',$logoDesaPictName);
-            // $sliderPhoto->move('images',$sliderPhotoPictName);
-
-            // WebsiteContent::where('id',$id)
-            //     ->update([
-            //     'visi' => $request->visidesa,
-            //     'misi' => $request->misidesa,
-            //     'lokasiDesa' => $request->lokasiDesa,
-            //     'logoDesa' => $request->logoDesaName,
-            //     'sliderPhoto' => $request->sliderPhotoName,
-            //     'sliderTextH1' => $request->sliderTextH1,
-            //     'sliderTextH2' => $request->sliderTextH2,
-            //     'idUser' => \Auth::user()->id
-            // ]);
-
-        //     return redirect('operator/manajer-website')->with('success', 'Konten Website Berhasil Diperbaharui');
-
-        // }else{
-        //     return redirect('operator/manajer-website')->with('error', 'Terjadi Kesalahan');
-        // }
-
     }
 
     /**

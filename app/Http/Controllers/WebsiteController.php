@@ -10,10 +10,6 @@ class WebsiteController extends Controller
 {
     public function index(){
         $getContent = WebsiteContent::first();
-        // $getContent = DB::table('website_contents')
-        //                 ->first();
-
-        // $parsedContent = (object) $getContent;
 
         return view('website.index',[
             'content' => $getContent

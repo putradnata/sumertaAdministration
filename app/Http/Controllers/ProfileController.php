@@ -54,29 +54,4 @@ class ProfileController extends Controller
 
         return $dt->formatLocalized('%e %B %Y'); // 3 September 2018
     }
-
-    public function testAjax(){
-        // $noKK = $_GET['noKK'];
-
-        // $selectKeluargaPenduduk = DB::table('penduduk')
-        //                         ->where('noKK',$noKK)
-        //                         ->get();
-
-        // foreach($selectKeluargaPenduduk as $skp => $sk){
-        //     $html = "
-        //         <tr>
-        //         <td style='text-align:center;'></td>
-        //         <td>
-        //             $sk->nama
-        //         </td>
-        //         <td>$sk->jenisKelamin</td>
-        //         <td>$sk->kedudukanKeluarga</td>
-        //         </tr>
-        //     ";
-        // }
-
-
-        // return $html;
-
-    }
 }

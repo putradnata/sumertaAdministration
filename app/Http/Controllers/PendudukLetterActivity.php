@@ -26,21 +26,6 @@ class PendudukLetterActivity extends Controller
                             ->orderByDesc('noSurat')
                             ->first();
 
-        // $getAllLetter = DB::table('pengajuan_surat')
-        //                     ->where('NIK',\Auth::user()->NIK)
-        //                     ->orderByDesc('noSurat')
-        //                     ->get();
-
-        // $getAllLetter = DB::table('pengajuan_surat')
-        //                     ->join('jenis_surat','pengajuan_surat.idJenisSurat','=','jenis_surat.id')
-        //                     ->select(
-        //                         'jenis_surat.jenis as jenisSurat',
-        //                         'pengajuan_surat.*'
-        //                     )
-        //                     ->where('NIK',\Auth::user()->NIK)
-        //                     ->orderByDesc('noSurat')
-        //                     ->get();
-
         $getAllLetter = DB::table('pengajuan_surat')
                             ->join('penduduk','pengajuan_surat.NIK','=','penduduk.NIK')
                             ->join('jenis_surat','pengajuan_surat.idJenisSurat','=','jenis_surat.id')
@@ -53,31 +38,6 @@ class PendudukLetterActivity extends Controller
                             ->Where('penduduk.noKK',$getPenduduk->noKK)
                             ->orderByDesc('pengajuan_surat.created_at')
                             ->get();
-
-        // $noSurat = $getLatestLetter->noSurat;
-
-        // //current date
-        // $today = \Carbon\Carbon::now()->format('Y-m-d');
-
-        // // $letterTracking = DB::table('pengajuan_surat')
-        // //                     ->where('NIK',\Auth::user()->NIK)
-        // //                     ->where('pengajuan_surat.created_at','like','%'.$today.'%')
-        // //                     ->orderByDesc('noSurat',$noSurat)
-        // //                     ->first();
-
-        // $letterTracking = DB::table('pengajuan_surat')
-        //                     ->join('penduduk','pengajuan_surat.NIK','=','penduduk.NIK')
-        //                     ->select(
-        //                         'penduduk.nama as namaPenduduk',
-        //                         'penduduk.noKK as nomerKK',
-        //                         'pengajuan_surat.*'
-        //                     )
-        //                     ->where('pengajuan_surat.created_at','like','%'.$today.'%')
-        //                     ->Where('penduduk.noKK',$getPenduduk->noKK)
-        //                     ->orderByDesc('pengajuan_surat.created_at')
-        //                     ->get();
-
-        // dd($letterTracking->toSql(),$letterTracking->getBindings());
 
         return view('penduduk/data-surat.letter-tracking',[
             'surat' => $selectSurat,
