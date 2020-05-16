@@ -10,6 +10,9 @@ use Carbon\Carbon;
 class OperatorLetterActivity extends Controller
 {
     public function incomingLetter(){
+        //current date
+        $today = \Carbon\Carbon::now()->format('Y-m-d');
+
         $incomingLetter = DB::table('pengajuan_surat')
                             ->join('penduduk','pengajuan_surat.NIK','=','penduduk.NIK')
                             ->join('jenis_surat','pengajuan_surat.idJenisSurat','=','jenis_surat.id')
@@ -19,10 +22,14 @@ class OperatorLetterActivity extends Controller
                                 'penduduk.nama as Pemohon',
                                 'banjar.nama as Banjar',
                                 'jenis_surat.jenis as JenisSurat',
-                                'pengajuan_surat.created_at as tanggalMengajukan'
+                                'pengajuan_surat.created_at as tanggalMengajukan',
+                                'pengajuan_surat.status as statusSurat',
                             )
-                            ->where('pengajuan_surat.status','-1')
+                            ->where('pengajuan_surat.created_at','like','%'.$today.'%')
+                            ->orderByDesc('pengajuan_surat.created_at')
                             ->get();
+
+        //dd($incomingLetter->toSql(),$incomingLetter->getBindings());
 
         // dd($incomingLetter);
 
@@ -31,8 +38,52 @@ class OperatorLetterActivity extends Controller
         ]);
     }
 
-    public function letterTracking(){
+    public function OperatorProcess($id){
+        $operatorProcess = DB::table('pengajuan_surat')
+                                    ->where('noSurat',$id)
+                                    ->update(['status' => 'D']);
 
+        if($operatorProcess){
+            return redirect('operator/surat-masuk')->with('success','Status Berhasil Diperbaharui');
+        }else{
+            return redirect('operator/surat-masuk')->with('error','Terjadi Kesalahan');
+        }
+    }
+
+    public function KelianBanjarProcess($id){
+        $operatorProcess = DB::table('pengajuan_surat')
+                                    ->where('noSurat',$id)
+                                    ->update(['status' => 'KBD']);
+
+        if($operatorProcess){
+            return redirect('operator/surat-masuk')->with('success','Status Berhasil Diperbaharui');
+        }else{
+            return redirect('operator/surat-masuk')->with('error','Terjadi Kesalahan');
+        }
+    }
+
+    public function KepalaDesaProcess($id){
+        $operatorProcess = DB::table('pengajuan_surat')
+                                    ->where('noSurat',$id)
+                                    ->update(['status' => 'KD']);
+
+        if($operatorProcess){
+            return redirect('operator/surat-masuk')->with('success','Status Berhasil Diperbaharui');
+        }else{
+            return redirect('operator/surat-masuk')->with('error','Terjadi Kesalahan');
+        }
+    }
+
+    public function CompletedProcess($id){
+        $operatorProcess = DB::table('pengajuan_surat')
+                                    ->where('noSurat',$id)
+                                    ->update(['status' => 'S']);
+
+        if($operatorProcess){
+            return redirect('operator/surat-masuk')->with('success','Status Berhasil Diperbaharui');
+        }else{
+            return redirect('operator/surat-masuk')->with('error','Terjadi Kesalahan');
+        }
     }
 
     public static function indonesianFormattedDate($date) {

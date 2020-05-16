@@ -25,7 +25,17 @@ Route::group(['middleware' => 'operator'], function () {
         Route::resource('data-surat','JenisSuratController');
 
         //Incoming Letter
-        Route::get('surat-masuk','OperatorLetterActivity@incomingLetter');
+        Route::get('surat-masuk','OperatorLetterActivity@incomingLetter')->name('incomingLetter.incoming');
+
+        //letter management
+            //operator Process
+            Route::get('surat-masuk/op/{id}','OperatorLetterActivity@OperatorProcess')->name('operator.process');
+            //kelian banjar dinas process
+            Route::get('surat-masuk/kb/{id}','OperatorLetterActivity@KelianBanjarProcess')->name('kelian.process');
+            //Kepala DEsa Process
+            Route::get('surat-masuk/kd/{id}','OperatorLetterActivity@KepalaDesaProcess')->name('kades.process');
+            //Completed process
+            Route::get('surat-masuk/cm/{id}','OperatorLetterActivity@CompletedProcess')->name('process.completed');
 
     });
 });
@@ -47,6 +57,11 @@ Route::group(['middleware' => 'penduduk'], function () {
 
         //pengajuan surat
         Route::resource('pengajuan-surat','PengajuanSuratController');
+
+        Route::get('/data-surat/lacak-surat','PendudukLetterActivity@LetterTracking')->name('letterTracking.tracking');
+
+        //fetchSurat
+        Route::get('/data-surat/fetchData/{id}','PendudukLetterActivity@LetterFilter');
     });
 });
 
@@ -72,7 +87,7 @@ Route::get('/staging/test', function(){
 });
 
 Route::get('/staging/surat',function(){
-    return view('layouts.surat');
+    return view('penduduk/data-surat.letter-tracking');
 });
 
 // Route::get('/staging/surat-masuk','OperatorLetterActivity@incomingLetter');

@@ -176,11 +176,23 @@
                                             <td>{{ ProfileController::indonesianFormattedDate($ds->created_at) }}</td>
                                             @if ($ds->status == '-1')
                                                 <td>
-                                                    <span class="badge badge-warning text-light form-pill px-3 py-1">Belum Terkonfirmasi</span>
+                                                    <span class="badge badge-info text-light form-pill px-3 py-1">Pengajuan Berhasil</span>
                                                 </td>
                                             @elseif ($ds->status == 'D')
                                                 <td>
-                                                    <span class="badge badge-success text-light form-pill px-3 py-1">Diterima</span>
+                                                    <span class="badge badge-warning text-light form-pill px-3 py-1">Diproses Operator</span>
+                                                </td>
+                                            @elseif ($ds->status == 'KBD')
+                                                <td>
+                                                    <span class="badge badge-secondary text-light form-pill px-3 py-1">Diproses Kelian Banjar Dinas</span>
+                                                </td>
+                                            @elseif ($ds->status == 'KD')
+                                                <td>
+                                                    <span class="badge badge-primary text-light form-pill px-3 py-1">Diproses Kepala Desa</span>
+                                                </td>
+                                            @elseif ($ds->status == 'S')
+                                                <td>
+                                                    <span class="badge badge-success text-light form-pill px-3 py-1">Surat Selesai</span>
                                                 </td>
                                             @endif
 

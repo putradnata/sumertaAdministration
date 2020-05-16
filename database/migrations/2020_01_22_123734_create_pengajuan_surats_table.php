@@ -14,7 +14,7 @@ class CreatePengajuanSuratsTable extends Migration
     public function up()
     {
         Schema::create('pengajuan_surat', function (Blueprint $table) {
-            $table->string('noSurat', 30)->primary();
+            $table->string('noSurat', 30);
             $table->char('NIK', 16);
             $table->unsignedBigInteger('idJenisSurat');
             $table->unsignedBigInteger('idBanjar');

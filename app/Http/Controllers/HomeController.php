@@ -7,6 +7,7 @@ use App\Penduduk;
 use App\Banjar;
 use Illuminate\Support\Facades\DB;
 use App\JenisSurat;
+use App\PengajuanSurat;
 
 class HomeController extends Controller
 {

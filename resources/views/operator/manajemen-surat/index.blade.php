@@ -34,45 +34,98 @@
                             <th>Nama Pemohon</th>
                             <th>Surat</th>
                             <th>Asal Banjar</th>
-                            <th colspan="2">Aksi</th>
-                            {{-- <th colspan="3" style="width:10%;">Aksi</th> --}}
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($incomingLetter as $icl => $ic)
+                        @if ($incomingLetter->isEmpty())
                             <tr>
-                                <td style="text-align:center;">{{ ++$icl }}</td>
-                                <td>{{ $ic->noSurat }}</td>
-                                <td>{{ $ic->Pemohon }}</td>
-                                <td>{{ $ic->JenisSurat }}</td>
-                                <td>{{ $ic->Banjar }}</td>
-
-                                <td style="text-align:center;">
-                                    <a href="#" class="btn btn-secondary btn-sm" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
-
-                                    <a href="#" class="btn btn-primary btn-sm" title="Terima"><i class="fa fa-user"></i> Kepala Desa</a>
-
-                                    <a href="#" class="btn btn-success btn-sm" title="Terima"><i class="fa fa-check"></i> Selesai</a>
-                                </td>
-
-                                {{-- <td style="text-align:center;">
-                                    <a href="#" class="btn btn-primary btn-sm" title="Detail" data-toggle="modal" data-id="{{ $ic->id }}" data-target="#banjarModal"><i class="fa fa-eye"></i></a>
-                                </td> --}}
-
-                                {{-- <td style="text-align:center;">
-                                    <a href="{{ route('banjar.edit',$ic->id) }}" class="btn btn-warning btn-sm" title="Update"><i class="fa fa-sticky-note-o"></i></a>
-                                </td> --}}
-
-                                {{-- <td style="text-align:center;">
-                                    <form method="POST" action="{{ route('banjar.destroy',$ic->id) }}">
-                                        @csrf
-                                        <input type="hidden" name="_method" value="DELETE">
-
-                                        <button class="btn btn-danger btn-sm" title="Hapus" type="submit"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                </td> --}}
+                                <td colspan="6" style="text-align:center;">Tidak Ada Surat Masuk</td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach ($incomingLetter as $icl => $ic)
+                                @if ($ic->statusSurat == '-1')
+                                    <tr>
+                                        <td style="text-align:center;">{{ ++$icl }}</td>
+                                        <td>{{ $ic->noSurat }}</td>
+                                        <td>{{ $ic->Pemohon }}</td>
+                                        <td>{{ $ic->JenisSurat }}</td>
+                                        <td>{{ $ic->Banjar }}</td>
+                                        <td style="text-align:center;">
+                                            <a href="{{ route('operator.process',$ic->noSurat) }}" class="btn btn-secondary btn-sm m-2" title="Terima"><i class="fa fa-user"></i> Surat Telah Diproses</a>
+
+                                            <a href="{{ route('kelian.process',$ic->noSurat) }}" class="btn btn-info btn-sm m-2" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
+
+                                            <a href="{{ route('kades.process',$ic->noSurat) }}" class="btn btn-primary btn-sm m-2" title="Terima"><i class="fa fa-user"></i> Kepala Desa</a>
+
+                                            <a href="{{ route('process.completed',$ic->noSurat) }}" class="btn btn-success btn-sm m-2" title="Terima"><i class="fa fa-check"></i> Selesai</a>
+                                        </td>
+                                    </tr>
+                                @elseif ($ic->statusSurat == 'D')
+                                    <tr>
+                                        <td style="text-align:center;">{{ ++$icl }}</td>
+                                        <td>{{ $ic->noSurat }}</td>
+                                        <td>{{ $ic->Pemohon }}</td>
+                                        <td>{{ $ic->JenisSurat }}</td>
+                                        <td>{{ $ic->Banjar }}</td>
+                                        <td style="text-align:center;">
+                                            <a href="{{ route('operator.process',$ic->noSurat) }}" class="btn btn-secondary btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Surat Telah Diproses</a>
+
+                                            <a href="{{ route('kelian.process',$ic->noSurat) }}" class="btn btn-info btn-sm m-2" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
+
+                                            <a href="{{ route('kades.process',$ic->noSurat) }}" class="btn btn-primary btn-sm m-2" title="Terima"><i class="fa fa-user"></i> Kepala Desa</a>
+
+                                            <a href="{{ route('process.completed',$ic->noSurat) }}" class="btn btn-success btn-sm m-2" title="Terima"><i class="fa fa-check"></i> Selesai</a>
+                                        </td>
+                                    </tr>
+                                @elseif ($ic->statusSurat == 'KBD')
+                                    <tr>
+                                        <td style="text-align:center;">{{ ++$icl }}</td>
+                                        <td>{{ $ic->noSurat }}</td>
+                                        <td>{{ $ic->Pemohon }}</td>
+                                        <td>{{ $ic->JenisSurat }}</td>
+                                        <td>{{ $ic->Banjar }}</td>
+                                        <td style="text-align:center;">
+                                            <a href="{{ route('operator.process',$ic->noSurat) }}" class="btn btn-secondary btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Surat Telah Diproses</a>
+
+                                            <a href="{{ route('kelian.process',$ic->noSurat) }}" class="btn btn-info btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
+
+                                            <a href="{{ route('kades.process',$ic->noSurat) }}" class="btn btn-primary btn-sm m-2" title="Terima"><i class="fa fa-user"></i> Kepala Desa</a>
+
+                                            <a href="{{ route('process.completed',$ic->noSurat) }}" class="btn btn-success btn-sm m-2" title="Terima"><i class="fa fa-check"></i> Selesai</a>
+                                        </td>
+                                    </tr>
+                                @elseif ($ic->statusSurat == 'KD')
+                                    <tr>
+                                        <td style="text-align:center;">{{ ++$icl }}</td>
+                                        <td>{{ $ic->noSurat }}</td>
+                                        <td>{{ $ic->Pemohon }}</td>
+                                        <td>{{ $ic->JenisSurat }}</td>
+                                        <td>{{ $ic->Banjar }}</td>
+                                        <td style="text-align:center;">
+                                            <a href="{{ route('operator.process',$ic->noSurat) }}" class="btn btn-secondary btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Surat Telah Diproses</a>
+
+                                            <a href="{{ route('kelian.process',$ic->noSurat) }}" class="btn btn-info btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
+
+                                            <a href="{{ route('kades.process',$ic->noSurat) }}" class="btn btn-primary btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Kepala Desa</a>
+
+                                            <a href="{{ route('process.completed',$ic->noSurat) }}" class="btn btn-success btn-sm m-2" title="Terima"><i class="fa fa-check"></i> Selesai</a>
+                                        </td>
+                                    </tr>
+                                @elseif ($ic->statusSurat == 'S')
+                                    <tr>
+                                        <td style="text-align:center;">{{ ++$icl }}</td>
+                                        <td>{{ $ic->noSurat }}</td>
+                                        <td>{{ $ic->Pemohon }}</td>
+                                        <td>{{ $ic->JenisSurat }}</td>
+                                        <td>{{ $ic->Banjar }}</td>
+                                        <td style="text-align:center;">
+                                            <a href="#" class="btn btn-success btn-sm m-2" title="Cetak"><i class="fa fa-print"></i> Cetak</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

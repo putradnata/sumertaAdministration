@@ -81,7 +81,7 @@
             </div>
         </div>
     </div>
-    <!-- Status Surat -->
+    {{-- <!-- Status Surat -->
     <div class="col-xl-6 col-md-6">
         <div class="card card-shadow mb-4">
             <div class="card-header border-0">
@@ -94,22 +94,25 @@
             </div>
             <div class="card-body">
                 <ul class="list-unstyled base-timeline activity-timeline">
-                    <li class="">
-                        <div class="timeline-icon">
-                            <img src="{{ asset('newBackAssets/img/avatar/avatar1.jpg')}}" alt=""/>
-                        </div>
-                        <div class="act-time"></div>
-                        <div class="base-timeline-info">
-                            <a href="#">{{ $getPenduduk->nama }}</a> Successfully purchased item#26
-                        </div>
-                        <small class="text-muted">
-                            28 mins ago
-                        </small>
-                    </li>
+                    @if ($letterTracking == null)
+                        <li class="">
+                            Saat ini belum ada surat yang diajukan.
+                        </li>
+                    @elseif($letterTracking->status == '-1')
+                        @include('penduduk/tracking-components.delivered')
+                    @elseif($letterTracking->status == 'D')
+                        @include('penduduk/tracking-components.operator-received')
+                    @elseif($letterTracking->status == 'KBD')
+                        @include('penduduk/tracking-components.kelian-process')
+                    @elseif($letterTracking->status == 'KD')
+                        @include('penduduk/tracking-components.kepala-desa-process')
+                    @elseif($letterTracking->status == 'S')
+                        @include('penduduk/tracking-components.completed')
+                    @endif
                 </ul>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection
 
