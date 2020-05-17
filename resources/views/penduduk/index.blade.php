@@ -46,6 +46,8 @@
                     </div>
 
                     <div id="detailUsaha">
+                        <input class="form-control" id="sktu" name="sktu" type="hidden">
+
                         <div class="form-group">
                             <label for="namaUsaha">Nama Usaha</label>
                             <input class="form-control" id="namaUsaha" name="namaUsaha" type="text">
@@ -59,11 +61,6 @@
                         <div class="form-group">
                             <label for="alamatUsaha">Alamat Usaha</label>
                             <input class="form-control" id="alamatUsaha" name="alamatUsaha" type="text">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nomorTeleponUsaha">Nomor Telepon</label>
-                            <input class="form-control" id="nomorTeleponUsaha" name="nomorTeleponUsaha" type="text">
                         </div>
                     </div>
 
@@ -128,6 +125,7 @@
 
                 if(extractedData == "Surat Keterangan Usaha"){
                     $("#detailUsaha").attr('hidden',false);
+                    $("#sktu").val("Surat Keterangan Usaha");
                 }else{
                     $("#detailUsaha").attr('hidden',true);
                 }

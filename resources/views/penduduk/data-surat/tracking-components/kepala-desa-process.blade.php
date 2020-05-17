@@ -19,7 +19,7 @@
         Surat telah Dikonfirmasi oleh Operator Desa.
     </div>
     <small class="text-muted">
-        28 mins ago
+        &nbsp;
     </small>
 </li>
 <li class="">
@@ -31,7 +31,7 @@
         Surat Diproses oleh Kelian Banjar Dinas.
     </div>
     <small class="text-muted">
-        28 mins ago
+        &nbsp;
     </small>
 </li>
 <li class="">
@@ -43,6 +43,6 @@
         Surat Diproses oleh Kepala Desa.
     </div>
     <small class="text-muted">
-        28 mins ago
+        &nbsp;
     </small>
 </li>

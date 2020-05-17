@@ -19,6 +19,6 @@
         Surat telah Dikonfirmasi oleh Operator Desa.
     </div>
     <small class="text-muted">
-        28 mins ago
+        &nbsp;
     </small>
 </li>

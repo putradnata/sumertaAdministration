@@ -23,6 +23,7 @@
                         <div class="form-group">
                             <label>Pilih Surat</label>
                             <select class="form-control" id="pilihSurat" name="pilihSurat">
+                                    <option value=""> ---</option>
                                 @foreach ($allLetter as $al)
                                     <option value="{{ $al->noSurat }}">{{ $al->noSurat }} - {{ $al->namaPenduduk }} - {{ $al->jenisSurat }}</option>
                                 @endforeach

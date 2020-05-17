@@ -14,7 +14,8 @@ class Usaha extends Migration
     public function up()
     {
         Schema::create('usaha', function (Blueprint $table) {
-            $table->string('NIKPemilik', 16)->primary();
+            $table->bigIncrements('id');
+            $table->string('NIKPemilik', 16);
             $table->string('nama')->nullable();
             $table->string('jenisUsaha')->nullable();
             $table->string('alamat')->nullable();

@@ -19,8 +19,6 @@ class PengajuanSuratController extends Controller
     {
         $incomingLetter = PengajuanSurat::where('status','-1')
                             ->get();
-
-        dd($incomingLetter);
     }
 
     /**
@@ -41,6 +39,7 @@ class PengajuanSuratController extends Controller
      */
     public function store(Request $request)
     {
+
         //get nik
         $nik = $request->pemohon;
 
@@ -49,10 +48,10 @@ class PengajuanSuratController extends Controller
                         ->where('NIK',$nik)
                         ->first();
 
-        //find kelian
-        $findKelian = DB::table('kelian_banjar_dinas')
-                                ->where('idBanjar',$findPenduduk->idBanjar)
-                                ->first();
+        //find banjar
+        $findBanjar = DB::table('banjar')
+                    ->where('id',$findPenduduk->idBanjar)
+                    ->first();
 
         //get current month
         $now = Carbon::now()->toDateString();
@@ -66,54 +65,133 @@ class PengajuanSuratController extends Controller
         $conversion = str_ireplace($normalNumber,$romanNumber,$month);
 
         //get banjar's initial
-        if($findKelian->idBanjar == '1'){
+        if($findBanjar->id == '1'){
             $banjarInitial = 'TK';
-        }else if($findKelian->idBanjar == '2'){
+        }else if($findBanjar->id == '2'){
             $banjarInitial = 'SM';
-        }else if($findKelian->idBanjar == '3'){
+        }else if($findBanjar->id == '3'){
             $banjarInitial = 'KB';
-        }else if($findKelian->idBanjar == '4'){
+        }else if($findBanjar->id == '4'){
             $banjarInitial = 'PK';
-        }else if($findKelian->idBanjar == '5'){
+        }else if($findBanjar->id == '5'){
             $banjarInitial = 'PND';
-        }else if($findKelian->idBanjar == '6'){
+        }else if($findBanjar->id == '6'){
             $banjarInitial = 'LBH';
         }
 
-        //count how many letter in database
-        $findLatestLetter = DB::table('pengajuan_surat')
-                            ->select('noSurat',DB::raw('MAX(noSurat)'))
-                            ->where('noSurat','like','%' .$banjarInitial. '%')
-                            ->where('noSurat','like','%/' .$conversion. '/%')
-                            ->groupBy('noSurat')
-                            ->orderByDesc('noSurat')
-                            ->first();
-        $noUrut = substr($findLatestLetter->noSurat,0,3);
-        $maxid=explode("/",$findLatestLetter->noSurat);
-        $noUrut = $maxid[0];
-        $noUrut++;
+        //check has letter or not
+        $checkLetter = DB::table('pengajuan_surat')
+                        ->join('penduduk','pengajuan_surat.NIK','=','penduduk.NIK')
+                        ->select(
+                            'penduduk.nama as namaPenduduk',
+                            'penduduk.noKK as nomerKK',
+                            'pengajuan_surat.*'
+                        )
+                        ->where('penduduk.NIK',\Auth::user()->NIK)
+                        ->get();
 
-        $newLetterNumber = sprintf('%03s',$noUrut).'/'.$banjarInitial.'/'.$conversion.'/'.$m[0];
+        if($checkLetter->isEmpty()){
 
-        $data = [
-            'noSurat' => $newLetterNumber,
-            'NIK' => $nik,
-            'idJenisSurat' => $request->suratDiajukan,
-            'idKelianDinas' => $findKelian->id,
-            'status' => '-1',
-        ];
+            $newLetterNumber = '001'.'-'.$banjarInitial.'-'.$conversion.'-'.$m[0];
 
-        // dd($noUrut);
+            $data = [
+                'noSurat' => $newLetterNumber,
+                'NIK' => $nik,
+                'idJenisSurat' => $request->suratDiajukan,
+                'idBanjar' => $findBanjar->id,
+                'status' => '-1',
+            ];
 
-        //get toSql with the value
-        // dd($findLatestLetter->toSql(), $findLatestLetter->getBindings());
+             //get if letter = sktu
+            $validateSKTU = $request->sktu;
 
-        $insert = PengajuanSurat::create($data);
+            if($validateSKTU){
+                $dataUsaha = [
+                    'NIKPemilik' => $nik,
+                    'nama' => $request->namaUsaha,
+                    'jenisUsaha' => $request->jenisUsaha,
+                    'alamat' => $request->alamatUsaha,
+                    'created_at' => \Carbon\Carbon::now()
+                ];
 
-        if($insert){
-            return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
+                $insert = PengajuanSurat::create($data);
+
+                $insertUsaha = DB::table('usaha')
+                                ->insert($dataUsaha);
+
+                if($insert && $insertUsaha){
+                    return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
+                }else{
+                    return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');
+                }
+
+            }else{
+                $insert = PengajuanSurat::create($data);
+
+                if($insert){
+                    return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
+                }else{
+                    return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');
+                }
+            }
+
         }else{
-            return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');
+            //count how many letter in database
+            $findLatestLetter = DB::table('pengajuan_surat')
+                                ->select('noSurat',DB::raw('MAX(noSurat)'))
+                                ->where('noSurat','like','%' .$banjarInitial. '%')
+                                ->where('noSurat','like','%-' .$conversion. '-%')
+                                ->groupBy('noSurat')
+                                ->orderByDesc('noSurat')
+                                ->first();
+
+            $noUrut = substr($findLatestLetter->noSurat,0,3);
+            $maxid=explode("-",$findLatestLetter->noSurat);
+            $noUrut = $maxid[0];
+            $noUrut++;
+
+            $newLetterNumber = sprintf('%03s',$noUrut).'-'.$banjarInitial.'-'.$conversion.'-'.$m[0];
+
+            $data = [
+                'noSurat' => $newLetterNumber,
+                'NIK' => $nik,
+                'idJenisSurat' => $request->suratDiajukan,
+                'idBanjar' => $findBanjar->id,
+                'status' => '-1',
+            ];
+
+             //get if letter = sktu
+            $validateSKTU = $request->sktu;
+
+            if($validateSKTU){
+                $dataUsaha = [
+                    'NIKPemilik' => $nik,
+                    'nama' => $request->namaUsaha,
+                    'jenisUsaha' => $request->jenisUsaha,
+                    'alamat' => $request->alamatUsaha,
+                    'created_at' => \Carbon\Carbon::now()
+                ];
+
+                $insert = PengajuanSurat::create($data);
+
+                $insertUsaha = DB::table('usaha')
+                                ->insert($dataUsaha);
+
+                if($insert && $insertUsaha){
+                    return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
+                }else{
+                    return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');
+                }
+
+            }else{
+                $insert = PengajuanSurat::create($data);
+
+                if($insert){
+                    return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
+                }else{
+                    return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');
+                }
+            }
         }
 
     }

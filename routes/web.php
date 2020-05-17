@@ -78,13 +78,8 @@ Route::get('/','WebsiteController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// /* Staging Route  */
-// Route::get('/staging/test', function(){
-//     return view('layouts.base');
-// });
+/* Staging Route  */
+/*
+all testing will put here
+*/
 
-// Route::get('/staging/surat',function(){
-//     return view('penduduk/data-surat.letter-tracking');
-// });
-
-// // Route::get('/staging/surat-masuk','OperatorLetterActivity@incomingLetter');

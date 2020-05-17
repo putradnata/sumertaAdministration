@@ -12,7 +12,7 @@ class PengajuanSurat extends Model
         'noSurat',
         'NIK',
         'idJenisSurat',
-        'idKelianDinas',
+        'idBanjar',
         'status',
         'idUser',
         'pathKK'

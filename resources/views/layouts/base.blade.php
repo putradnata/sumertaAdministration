@@ -139,10 +139,9 @@
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Data Banjar">
                         <a class="nav-link" href="{{ route('manajer-website.index') }}">
                             <i class="icon-globe"></i>
-                            <span class="nav-link-text">Manajer Website</span>
+                            <span class="nav-link-text">Manajemen Website</span>
                         </a>
                     </li>
-
                 </ul>
                 <!--/left side nav-->
             @elseif(Auth::user()->jabatan == 'p')
