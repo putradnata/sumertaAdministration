@@ -1,5 +1,6 @@
 <?php
     use \App\Http\Controllers\ProfileController;
+    use \Carbon\Carbon;
 ?>
 
 @extends('layouts.base')
@@ -19,14 +20,6 @@
         <div class="row ">
             <div class="col-md-6 ml-auto text-lg-right">
                 <div class="profile-follower-info">
-                    {{-- <div class="d-inline-block px-4 text-left text-light">
-                        <strong class="f14 d-block">{!! count($keluargaUser) !!}</strong>
-                        <p>Jumlah Keluarga</p>
-                    </div>
-                    <div class="d-inline-block px-4 text-left text-light">
-                        <strong class="f14 d-block">{!! count($dataSurat) !!}</strong>
-                        <p>Surat yang Telah Diajukan</p>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -63,7 +56,7 @@
                     <div class="card-body">
                         <div class="text-center">
                             <div class="mt-4 mb-3">
-                                <img class="rounded-circle" src="{{ asset('newBackAssets/img/avatar/avatar-large3.jpg')}}" width="85"
+                                <img class="rounded-circle" src="{{ asset('newBackAssets/img/avatar/avatar1.jpg')}}" width="85"
                                     alt="" />
                             </div>
                             <h5 class="text-uppercase mb-0">{{ $dataUser[0]->namaPenduduk }}</h5>
@@ -86,7 +79,7 @@
                             <div class="badge-icon mb-4">
                                 <span class="badge badge-primary text-light form-pill px-5 py-3"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;&nbsp;Anggota Keluarga : {!! count($keluargaUser) !!}</span>
                                 <br><br>
-                                <span class="badge badge-primary text-light form-pill px-5 py-3"><i class="fa fa-envelope-open"></i>&nbsp;&nbsp;&nbsp;&nbsp;Surat Diajukan : {!! count($dataSurat) !!}</span>
+                                <span class="badge badge-primary text-light form-pill px-5 py-3"><i class="fa fa-envelope-open"></i>&nbsp;&nbsp;&nbsp;&nbsp;Surat Diajukan : {!! $jumlahSurat !!}</span>
                             </div>
                         </div>
                     </div>
@@ -150,8 +143,8 @@
                     <div class="card-header border-0">
                         <div class="custom-title-wrap bar-warning">
                             <div class="custom-title">
-                                Data Surat
-                                <a class="btn btn-success float-right" style="color:white"><i class="fa fa-envelope-open-o"></i>&nbsp;&nbsp;Ajukan Surat</a>
+                                Data Surat <small>Surat Terbaru</small>
+                                <a class="btn btn-success float-right" href="{{ route('penduduk.index') }}" style="color:white"><i class="fa fa-envelope-open-o"></i>&nbsp;&nbsp;Ajukan Surat</a>
                             </div>
                         </div>
                     </div>
@@ -169,11 +162,14 @@
                                 </thead>
                                 <tbody id="tbodySurat">
                                     @foreach ($dataSurat as $dst => $ds)
+                                    <?php
+                                        $tanggal = Carbon::parse($ds->created_at)->locale('id')
+                                    ?>
                                         <tr>
                                             <td style='text-align:center;'>{{ ++$dst }}</td>
                                             <td>{{ $ds->jenisSurat }}</td>
                                             <td>{{ $ds->namaPenduduk }}</td>
-                                            <td>{{ ProfileController::indonesianFormattedDate($ds->created_at) }}</td>
+                                            <td>{{ $tanggal->isoFormat('dddd, Do MMMM YYYY') }}</td>
                                             @if ($ds->status == '-1')
                                                 <td>
                                                     <span class="badge badge-info text-light form-pill px-3 py-1">Pengajuan Berhasil</span>
@@ -199,6 +195,11 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5">{{ $dataSurat->links() }}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

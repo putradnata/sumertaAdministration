@@ -16,23 +16,7 @@ class PendudukPindahController extends Controller
      */
     public function index()
     {
-        $penduduk = DB::table('penduduk')
-            ->join('detail_kepindahan','penduduk.NIK','=','detail_kepindahan.NIK')
-            ->join('banjar', 'penduduk.idBanjar', '=', 'banjar.id')
-            ->select('penduduk.*',
-                    'banjar.nama as namaBanjar',
-                    'detail_kepindahan.alasanPindah',
-                    'detail_kepindahan.alamat',
-                    'detail_kepindahan.desa',
-                    'detail_kepindahan.kecamatan',
-                    'detail_kepindahan.kabupaten',
-                    'detail_kepindahan.provinsi',
-                    'detail_kepindahan.padaTanggal')
-            ->orderBy('penduduk.idBanjar', 'ASC')
-            ->where('penduduk.statusPenduduk','P')
-            ->get();
 
-        return view('operator/kependudukan.pendudukPindah',['penduduk' => $penduduk]);
     }
 
     /**
@@ -42,7 +26,13 @@ class PendudukPindahController extends Controller
      */
     public function create()
     {
-        //
+        $findPenduduk = DB::table('penduduk')
+                        ->where('statusPenduduk','A')
+                        ->get();
+
+        return view('operator/kependudukan/penduduk-pindah.form',[
+            'penduduk' => $findPenduduk,
+        ]);
     }
 
     /**

@@ -63,11 +63,15 @@ class PendudukLetterActivity extends Controller
         return view('penduduk/data-surat.fetchData',['letterTracking'=> $letterTracking])->render();
     }
 
+    public function letterHistory(){
+        return view('penduduk/data-surat.jurnalSurat');
+    }
+
     public static function indonesianFormattedDate($date) {
         setlocale(LC_TIME, 'nl_NL.utf8');
         $dt = new  \Carbon\Carbon($date);
         // setlocale(LC_TIME, 'Indonesia');
-        
+
 
         return $dt->formatLocalized('%e %B %Y'); // 3 September 2018
     }

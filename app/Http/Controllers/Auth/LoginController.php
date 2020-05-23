@@ -58,7 +58,7 @@ class LoginController extends Controller
             if (auth()->user()->jabatan == 'o') {
                 return redirect()->route('operator.index');
             } else if (auth()->user()->jabatan == 'p') {
-                return redirect()->route('penduduk.index');
+                return redirect()->route('profilePenduduk');
             } else {
                 return redirect()->route('home');
             }

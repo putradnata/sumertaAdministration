@@ -52,7 +52,7 @@
     </div>
     <div class="act-time"></div>
     <div class="base-timeline-info">
-        Surat Telah Selesai, Surat dapat Diunduh <a href="#">Disini</a>.
+        Surat Telah Selesai, Surat dapat diambil di Kantor Desa
     </div>
     <small class="text-muted">
         &nbsp;

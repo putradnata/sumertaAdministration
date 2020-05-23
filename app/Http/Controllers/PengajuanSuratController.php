@@ -40,6 +40,10 @@ class PengajuanSuratController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            'fileKK' => 'required|mimes:jpeg,png,jpg,pdf|max:4096',
+        ]);
+
         //get nik
         $nik = $request->pemohon;
 
@@ -79,6 +83,10 @@ class PengajuanSuratController extends Controller
             $banjarInitial = 'LBH';
         }
 
+        $fileKK = $request->file('fileKK');
+
+        $fileKKName = time()."_"."KK"."-".$nik.".".$request->fileKK->extension();
+
         //check has letter or not
         $checkLetter = DB::table('pengajuan_surat')
                         ->join('penduduk','pengajuan_surat.NIK','=','penduduk.NIK')
@@ -100,6 +108,7 @@ class PengajuanSuratController extends Controller
                 'idJenisSurat' => $request->suratDiajukan,
                 'idBanjar' => $findBanjar->id,
                 'status' => '-1',
+                'pathKK' => $fileKKName,
             ];
 
              //get if letter = sktu
@@ -120,6 +129,7 @@ class PengajuanSuratController extends Controller
                                 ->insert($dataUsaha);
 
                 if($insert && $insertUsaha){
+                    $fileKK->move('files',$fileKKName);
                     return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
                 }else{
                     return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');
@@ -129,6 +139,7 @@ class PengajuanSuratController extends Controller
                 $insert = PengajuanSurat::create($data);
 
                 if($insert){
+                    $fileKK->move('files',$fileKKName);
                     return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
                 }else{
                     return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');
@@ -158,6 +169,7 @@ class PengajuanSuratController extends Controller
                 'idJenisSurat' => $request->suratDiajukan,
                 'idBanjar' => $findBanjar->id,
                 'status' => '-1',
+                'pathKK' => $fileKKName,
             ];
 
              //get if letter = sktu
@@ -178,6 +190,7 @@ class PengajuanSuratController extends Controller
                                 ->insert($dataUsaha);
 
                 if($insert && $insertUsaha){
+                    $fileKK->move('files',$fileKKName);
                     return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
                 }else{
                     return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');
@@ -187,6 +200,7 @@ class PengajuanSuratController extends Controller
                 $insert = PengajuanSurat::create($data);
 
                 if($insert){
+                    $fileKK->move('files',$fileKKName);
                     return redirect('penduduk')->with('success','Surat Berhasil Diajukan');
                 }else{
                     return redirect('penduduk')->with('error','Terjadi Kesalahan Saat Mengajukan Surat');

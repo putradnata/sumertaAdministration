@@ -37,6 +37,12 @@ Route::group(['middleware' => 'operator'], function () {
             //Completed process
             Route::get('surat-masuk/cm/{id}','OperatorLetterActivity@CompletedProcess')->name('process.completed');
 
+        //agenda
+        Route::get('agenda-surat','OperatorLetterActivity@agenda')->name('agenda-surat');
+
+        //print
+        Route::get('/cetak-surat/{id}','OperatorLetterActivity@print_PDF')->name('print-letter');
+
     });
 });
 
@@ -62,6 +68,9 @@ Route::group(['middleware' => 'penduduk'], function () {
 
         //fetchSurat
         Route::get('/data-surat/fetchData/{id}','PendudukLetterActivity@LetterFilter');
+
+        //letter histroy
+        Route::get('/data-surat/jurnal-surat','PendudukLetterActivity@letterHistory')->name('letterHistory');
     });
 });
 
@@ -83,3 +92,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 all testing will put here
 */
 
+// Route::get('/staging/penduduk-pindah',function(){
+//     return view('operator/kependudukan/penduduk-pindah.form');
+// });

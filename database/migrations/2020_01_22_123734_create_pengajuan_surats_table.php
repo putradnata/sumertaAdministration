@@ -19,6 +19,7 @@ class CreatePengajuanSuratsTable extends Migration
             $table->unsignedBigInteger('idJenisSurat');
             $table->unsignedBigInteger('idBanjar');
             $table->enum('status', ['-1','D', 'KBD', 'KD', 'S']);
+            $table->string('keperluan');
             $table->unsignedBigInteger('idUser')->nullable();
             $table->string('pathKK')->nullable();
             $table->timestamps();

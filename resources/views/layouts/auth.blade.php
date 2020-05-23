@@ -12,7 +12,7 @@
     <title>
         @if (Route::has('register'))
             Daftar Pengguna
-        @elseif(Route::has('login'))
+        @else
             Masuk
         @endif
     </title>

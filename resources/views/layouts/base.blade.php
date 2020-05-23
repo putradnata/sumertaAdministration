@@ -125,14 +125,14 @@
                     </li>
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Layouts">
-                        <a class="nav-link nav-link-collapse " data-toggle="collapse" data-target="#layouts">
+                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#layouts">
                             <i class="icon-envelope-open"></i>
                             <span class="nav-link-text">Data Surat</span>
                         </a>
                         <ul class="sidenav-second-level collapse" id="layouts" data-parent="#accordion">
                             <li> <a href="{{ route('incomingLetter.incoming') }}">Surat Masuk</a></li>
                             <li> <a href="{{ route('data-surat.index') }}">Jenis Surat</a> </li>
-                            <li> <a href="#">Jurnal Surat</a></li>
+                            <li> <a href="{{ route('agenda-surat') }}">Agenda Surat</a></li>
                         </ul>
                     </li>
 
@@ -156,24 +156,12 @@
                     </li>
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil Penduduk">
-                        <a class="nav-link nav-link-collapse " data-toggle="collapse" data-target="#layouts">
-                            <i class="icon-envelope-open "></i>
-                            <span class="nav-link-text">Profil Penduduk</span>
-                        </a>
-                        <ul class="sidenav-second-level collapse" id="layouts" data-parent="#accordion">
-                            <li> <a href="#">Data Diri</a></li>
-                            <li> <a href="#">Data Keluarga</a> </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil Penduduk">
                         <a class="nav-link nav-link-collapse " data-toggle="collapse" data-target="#suratt">
                             <i class="icon-envelope-open "></i>
                             <span class="nav-link-text">Data Surat</span>
                         </a>
                         <ul class="sidenav-second-level collapse" id="suratt" data-parent="#accordion">
                             <li> <a href="{{ route('letterTracking.tracking') }}">Lacak Surat</a></li>
-                            <li> <a href="#">Jurnal Surat</a> </li>
                         </ul>
                     </li>
 
@@ -210,7 +198,7 @@
                                         'jenis_surat.jenis as jenisSurat'
                                     )
                                     ->get();
-                            ?>
+                ?>
 
             <ul class="navbar-nav header-links ml-auto hide-arrow">
 
@@ -286,7 +274,57 @@
                     <div class="dropdown-menu dropdown-menu-right header-right-dropdown-width pb-0" aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header weight500">Notifikasi</h6>
                         <div class="dropdown-divider mb-0"></div>
-                            <a class="dropdown-item border-bottom">
+                        <?php
+                            $getPenduduk = DB::table('penduduk')
+                                            ->where('NIK',\Auth::user()->NIK)
+                                            ->first();
+
+                            $getAllLetter = DB::table('pengajuan_surat')
+                            ->join('penduduk','pengajuan_surat.NIK','=','penduduk.NIK')
+                            ->join('jenis_surat','pengajuan_surat.idJenisSurat','=','jenis_surat.id')
+                            ->select(
+                                'penduduk.nama as namaPenduduk',
+                                'penduduk.noKK as nomerKK',
+                                'pengajuan_surat.*',
+                                'jenis_surat.jenis as jenisSurat',
+                            )
+                            ->Where('penduduk.noKK',$getPenduduk->noKK)
+                            ->orderByDesc('pengajuan_surat.created_at')
+                            ->get();
+                        ?>
+                            @if ($getAllLetter->isEmpty())
+                                <a class="dropdown-item border-bottom">
+                                    <span class="text-secondary">
+                                        <span class="weight500">
+                                            Tidak Ada Notifikasi
+                                        </span>
+                                    </span>
+                                    <span class="small float-right text-muted"></span>
+
+                                    <div class="dropdown-message f12">
+
+                                    </div>
+                                </a>
+                            @else
+                                @foreach ($getAllLetter as $gAl)
+                                    <a class="dropdown-item border-bottom">
+                                        <span class="text-secondary">
+                                            <span class="weight500">
+                                                <strong class="text-primary">{{ $gAl->jenisSurat }}</strong> <small>Atas Nama</small>
+                                                <br><i>{{ $gAl->namaPenduduk }}</i>
+                                                <br>Sudah Selesai Diproses.<br>
+                                                Surat dapat diambil di Kantor Desa
+                                            </span>
+                                        </span>
+                                        <span class="small float-right text-muted"></span>
+
+                                        <div class="dropdown-message f12">
+
+                                        </div>
+                                    </a>
+                                @endforeach
+                            @endif
+                            {{-- <a class="dropdown-item border-bottom">
                                 <span class="text-secondary">
                                     <span class="weight500">
                                         Tidak Ada Notifikasi
@@ -297,7 +335,7 @@
                                 <div class="dropdown-message f12">
 
                                 </div>
-                            </a>
+                            </a> --}}
 
 
                             {{-- <a class="dropdown-item border-bottom" href="#">
@@ -384,6 +422,9 @@
 
     <!--chartjs-->
     <script src="{{ asset('newBackassets/vendor/chartjs/Chart.bundle.min.js')}}"></script>
+
+    <!--echarts-->
+    <script type="text/javascript" src="{{ asset('newBackAssets/vendor/echarts/echarts-all-3.js')}}"></script>
 
     <!-- Sweet Alert -->
     <script src="{{ asset('newBackAssets/vendor/swal/dist/sweetalert2.all.min.js')}}"></script>

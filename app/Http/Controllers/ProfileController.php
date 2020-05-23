@@ -39,12 +39,27 @@ class ProfileController extends Controller
                                     'jenis_surat.jenis as jenisSurat',
                                 )
                                 ->where('penduduk.noKK',$noKKuser)
-                                ->get();
+                                ->orderByDesc('pengajuan_surat.noSurat')
+                                ->paginate(2);
+
+        $countWOLimit = DB::table('pengajuan_surat')
+                                ->join('penduduk','pengajuan_surat.NIK','=','penduduk.NIK')
+                                ->join('jenis_surat','pengajuan_surat.idJenisSurat','=','jenis_surat.id')
+                                ->select(
+                                    'pengajuan_surat.*',
+                                    'penduduk.noKK as noKKPenduduk',
+                                    'penduduk.nama as namaPenduduk',
+                                    'jenis_surat.jenis as jenisSurat',
+                                )
+                                ->where('penduduk.noKK',$noKKuser)
+                                ->orderByDesc('pengajuan_surat.noSurat')
+                                ->count();
 
         return view('penduduk.profile',[
             'dataUser' => $selectUser,
             'keluargaUser' => $selectKeluargaPenduduk,
             'dataSurat' => $selectSuratPenduduk,
+            'jumlahSurat' => $countWOLimit,
         ]);
     }
 

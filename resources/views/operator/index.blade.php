@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="col-xl-6 col-md-6">
+        {{-- <div class="col-xl-6 col-md-6">
             <div class="card card-shadow mb-4">
                 <div class="card-header border-0">
                     <div class="custom-title-wrap bar-danger">
@@ -50,44 +50,15 @@
                         <div class="tab-pane fade show active" id="pills-weekly2" role="tabpanel"
                             aria-labelledby="pills-today-tab">
                             <div class="row">
-                                <div class="col-12 col-xl-7 col-md-6 text-center">
-                                    <canvas id="doughnut_chart" class="mb-3 mt-5"></canvas>
-
-                                </div>
-                                <div class="col-12 col-xl-4 col-md-6 text-muted mt-xl-4">
-                                    <ul class="list-unstyled f12">
-                                        <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2" style="color: #acf5fe"></i> {{ (int)round($sumCount[0]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100) }} %
-                                            <span class="float-right">{{ $banjarObject[0] }}</span>
-                                        </li>
-                                        <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2" style="color: #f79490"></i> {{ (int)round($sumCount[1]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100) }} %
-                                            <span class="float-right">{{ $banjarObject[1] }}</span>
-                                        </li>
-                                        <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2 " style="color: #f79490"></i> {{ (int)round($sumCount[2]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100) }}%
-                                            <span class="float-right">{{ $banjarObject[2] }}</span>
-                                        </li>
-                                        <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2 " style="color: #acf5fe"></i> {{ (int)round($sumCount[3]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100) }}%
-                                            <span class="float-right">{{ $banjarObject[3] }}</span>
-                                        </li>
-                                        <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2 " style="color: #5283C3"></i> -%
-                                            <span class="float-right">{{ $banjarObject[4] }}</span>
-                                        </li>
-                                        <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2 " style="color: #8E62A9"></i> -%
-                                            <span class="float-right">{{ $banjarObject[5] }}</span>
-                                        </li>
-                                    </ul>
+                                <div class="col-12 text-center">
+                                    <div id="psb" style="height: 195px"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
     </div>
 @endsection
@@ -177,7 +148,7 @@
         });
     </script>
     <!-- ChartJS init statistik penduduk masing masing banjar -->
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $(document).ready(function(){
             "use strict";
 
@@ -225,6 +196,51 @@
             });
 
         });
-    </script>
+    </script> --}}
+
+    {{-- <script type="text/javascript">
+        $(document).ready(function(){
+            var dom = document.getElementById("psb");
+            var dnutChart = echarts.init(dom);
+
+            // console.log({!! $testValBanjar !!});
+
+            var app = {};
+            option = null;
+            option = {
+                color: ['#acf5fe','#f79490', '#fcdd82','#cae59b', '#5283C3', '#8E62A9'],
+                tooltip : {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c} ({d}%)'
+                },
+                legend: {
+                    orient : 'vertical',
+                    x : 'left',
+                    // data:['Direct','Mail','Affiliate','AD','Search']
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'Data Banjar',
+                        type:'pie',
+                        radius : ['50%', '70%'],
+                        // data:[
+                        //     {value:335, name:'Direct'},
+                        //     {value:310, name:'Mail'},
+                        //     {value:234, name:'Affiliate'},
+                        //     {value:135, name:'AD'},
+                        //     {value:1548, name:'Search'}
+                        // ]
+                        // data:{!! $valuePendudukBanjar !!}, name:{!! $labelPendudukBanjar !!},
+                        // name:{!! $labelPendudukBanjar !!},
+                    }
+                ]
+            };
+
+            if (option && typeof option === "object") {
+                dnutChart.setOption(option, false);
+            }
+        });
+    </script> --}}
 
 @endsection

@@ -69,7 +69,7 @@
                                         <td>{{ $ic->JenisSurat }}</td>
                                         <td>{{ $ic->Banjar }}</td>
                                         <td style="text-align:center;">
-                                            <a href="{{ route('operator.process',$ic->noSurat) }}" class="btn btn-secondary btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Surat Telah Diproses</a>
+                                            <a href="{{ route('print-letter',$ic->noSurat) }}" class="btn btn-success btn-sm m-2" title="Cetak"><i class="fa fa-print"></i> Cetak</a>
 
                                             <a href="{{ route('kelian.process',$ic->noSurat) }}" class="btn btn-info btn-sm m-2" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
 
@@ -86,7 +86,7 @@
                                         <td>{{ $ic->JenisSurat }}</td>
                                         <td>{{ $ic->Banjar }}</td>
                                         <td style="text-align:center;">
-                                            <a href="{{ route('operator.process',$ic->noSurat) }}" class="btn btn-secondary btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Surat Telah Diproses</a>
+                                            <a href="{{ route('print-letter',$ic->noSurat) }}" class="btn btn-success btn-sm m-2" title="Cetak"><i class="fa fa-print"></i> Cetak</a>
 
                                             <a href="{{ route('kelian.process',$ic->noSurat) }}" class="btn btn-info btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
 
@@ -103,7 +103,7 @@
                                         <td>{{ $ic->JenisSurat }}</td>
                                         <td>{{ $ic->Banjar }}</td>
                                         <td style="text-align:center;">
-                                            <a href="{{ route('operator.process',$ic->noSurat) }}" class="btn btn-secondary btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Surat Telah Diproses</a>
+                                            <a href="{{ route('print-letter',$ic->noSurat) }}" class="btn btn-success btn-sm m-2" title="Cetak"><i class="fa fa-print"></i> Cetak</a>
 
                                             <a href="{{ route('kelian.process',$ic->noSurat) }}" class="btn btn-info btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
 
@@ -120,7 +120,13 @@
                                         <td>{{ $ic->JenisSurat }}</td>
                                         <td>{{ $ic->Banjar }}</td>
                                         <td style="text-align:center;">
-                                            <a href="#" class="btn btn-success btn-sm m-2" title="Cetak"><i class="fa fa-print"></i> Cetak</a>
+                                            <a href="{{ route('print-letter',$ic->noSurat) }}" class="btn btn-success btn-sm m-2" title="Cetak"><i class="fa fa-print"></i> Cetak</a>
+
+                                            <a href="{{ route('kelian.process',$ic->noSurat) }}" class="btn btn-info btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Kelian Dinas</a>
+
+                                            <a href="{{ route('kades.process',$ic->noSurat) }}" class="btn btn-primary btn-sm m-2 disabled" title="Terima"><i class="fa fa-user"></i> Kepala Desa</a>
+
+                                            <a href="{{ route('process.completed',$ic->noSurat) }}" class="btn btn-success btn-sm m-2 disabled" title="Terima"><i class="fa fa-check"></i> Selesai</a>
                                         </td>
                                     </tr>
                                 @endif

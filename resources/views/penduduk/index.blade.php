@@ -23,7 +23,7 @@
             </div>
             <div class="card-body">
                 <p class="text-muted">Silahkan ajukan surat melalui form berikut.</p>
-                <form method="POST" action="{{ route('pengajuan-surat.store') }}">
+                <form method="POST" action="{{ route('pengajuan-surat.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="pemohon">Pemohon</label>
@@ -62,6 +62,11 @@
                             <label for="alamatUsaha">Alamat Usaha</label>
                             <input class="form-control" id="alamatUsaha" name="alamatUsaha" type="text">
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keperluan">Keperluan</label>
+                        <input type="text" class="form-control" id="keperluan" name="keperluan">
                     </div>
 
                     <div class="form-group">
