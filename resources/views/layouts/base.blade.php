@@ -110,7 +110,7 @@
                                         <a href="#">Penduduk Pindah</a>
                                     </li>
                                     <li>
-                                        <a href="#">Penduduk Pindah</a>
+                                        <a href="{{ route('penduduk-meninggal.index') }}">Penduduk Meninggal</a>
                                     </li>
                                 </ul>
                             </li>

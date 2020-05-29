@@ -272,4 +272,71 @@ class PendudukController extends Controller
         return $dt->formatLocalized('%e %B %Y'); // 3 September 2018
     }
 
+    public function pendudukMeninggal(){
+        $pendudukMeninggal = DB::table('penduduk')
+                                ->join('detail_penduduk','penduduk.NIK','=','detail_penduduk.NIK')
+                                ->join('banjar','penduduk.idBanjar','=','banjar.id')
+                                ->select(
+                                    'penduduk.*',
+                                    'banjar.nama as namaBanjar',
+                                    'detail_penduduk.sebabKematian',
+                                    'detail_penduduk.tanggalLapor',
+                                    'detail_penduduk.padaTanggal',
+                                    )
+                                ->where('penduduk.statusPenduduk','M')
+                                ->get();
+
+        return view('operator/kependudukan/penduduk-meninggal.index',[
+            'pendudukMeninggal' => $pendudukMeninggal,
+        ]);
+    }
+
+    public function createPendudukMeninggal(){
+        $allPenduduk = DB::table('penduduk')
+                        ->where('statusPenduduk','A')
+                        ->get();
+
+        return view('operator/kependudukan/penduduk-meninggal.form',[
+            'penduduk' => $allPenduduk,
+        ]);
+    }
+
+    public function fetchDataMeninggal($id){
+
+        $selectPenduduk = DB::table('penduduk')
+            ->join('banjar', 'penduduk.idBanjar', '=', 'banjar.id')
+            ->select('penduduk.*', 'banjar.nama as namaBanjar')
+            ->where('NIK', $id)->get();
+
+        return view('operator/kependudukan/penduduk-meninggal.fetchData',['fetched'=> $selectPenduduk])->render();
+    }
+
+    public function storePendudukMeninggal(Request $request){
+        $data = [
+            'NIK' => $request->namaPenduduk,
+            'sebabKematian' => $request->sebabKematian,
+            'padaTanggal' =>$request->tanggalKematian,
+            'tanggalLapor' => \Carbon\Carbon::now()->format('Y-m-d'),
+            'created_at' => \Carbon\Carbon::now(),
+        ];
+
+        $insert = DB::table('detail_penduduk')
+                    ->insert($data);
+
+        if($insert){
+
+            $updateStatus = Penduduk::where('NIK',$request->namaPenduduk)
+                            ->update([
+                                'statusPenduduk' => 'M'
+                            ]);
+
+            if($updateStatus){
+                return redirect('operator/penduduk-meninggal')->with('success','Data Berhasil Ditambahkan');
+            }
+
+        }else{
+            return redirect('operator/penduduk-meninggal')->with('error','Terjadi Kesalahan Saat Menambah Data');
+        }
+    }
+
 }

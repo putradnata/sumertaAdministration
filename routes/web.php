@@ -43,6 +43,18 @@ Route::group(['middleware' => 'operator'], function () {
         //print
         Route::get('/cetak-surat/{id}','OperatorLetterActivity@print_PDF')->name('print-letter');
 
+        //Penduduk Meninggal
+        Route::get('/penduduk-meninggal','PendudukController@pendudukMeninggal')->name('penduduk-meninggal.index');
+
+        //create penduduk meninggal
+        Route::get('/penduduk-meninggal/create','PendudukController@createPendudukMeninggal')->name('penduduk-meninggal.create');
+
+        //fetch detail penduduk meninggal
+        Route::get('/penduduk-meninggal/fetchData/{id}','PendudukController@fetchDataMeninggal');
+
+        //store penduduk meninggal
+        Route::post('/penduduk-meninggal/store','PendudukController@storePendudukMeninggal')->name('penduduk-meninggal.store');
+
     });
 });
 

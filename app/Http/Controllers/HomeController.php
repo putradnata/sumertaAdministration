@@ -93,33 +93,16 @@ class HomeController extends Controller
                             ON penduduk.idBanjar = banjar.id
                             ");
 
-        // //dd($sumCount[3]->jumlahPenduduk);
-        // //dd($sumCount);
-        // $presentaseTK = $sumCount[0]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100;
-        // // $presentaseSM = $sumCount[1]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100;
-        // // $presentaseKB = $sumCount[2]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100;
-        // //dd((int)round($presentaseTK),(int)round($presentaseSM),(int)round($presentaseKB));
-        // // dd((int)round($presentaseSM));
-        // // dd((int)round($presentaseKB));
+        //count male
+        $SUMmale = Penduduk::where('jenisKelamin','L')
+                            ->where('statusPenduduk','A')
+                            ->count();
 
-        // dd((int)$presentaseTK);
+        //count female
+        $SUMfemale = Penduduk::where('jenisKelamin','P')
+        ->where('statusPenduduk','A')
+        ->count();
 
-        $xd = count($labelPendudukBanjar);
-        // $someTest = [
-        //     'name' => $labelPendudukBanjar,
-        //     'value' => $valuePendudukBanjar
-        // ];
-
-        $decode = (object) $labelPendudukBanjar;
-        $decodex = (object) $valuePendudukBanjar;
-
-
-        // $xxx = array(
-        //     'test'=> $decode,
-        //     'name'=> $decodex,
-        // );
-
-        // dd($xxx);
 
         return view('operator/index')
         ->with('valueMale',json_encode($valueMale))
@@ -131,9 +114,9 @@ class HomeController extends Controller
         ->with('pendudukBanjarObject',$pendudukBanjarObject)
         ->with('banjarObject',$banjarObject)
         ->with('sumCount',$sumCount)
-        ->with('namaBanjar',$banjar);
-        // ->with('testValBanjar',json_encode($xxx))
-        // ->with('testLaBanjar',$x);
+        ->with('namaBanjar',$banjar)
+        ->with('maleTotal',$SUMmale)
+        ->with('femaleTotal',$SUMfemale);
     }
 
     public function homePenduduk()

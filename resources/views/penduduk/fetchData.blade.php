@@ -16,7 +16,7 @@
             @endif
     </div>
     <div class="form-group">
-        <label for="alamat">Nomor Induk Kependudukan</label>
+        <label for="alamat">Alamat</label>
         <textarea class="form-control" id="alamat" name="alamat">{{ $data->alamatLengkap }}</textarea>
     </div>
 

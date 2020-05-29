@@ -13,9 +13,9 @@
                     <div class="row">
                         <div class="col-xl-3">
                             <span class="text-muted mb-5 d-inline-block"><i class="fa fa-male"></i> Jumlah Penduduk Laki-laki sebanyak :</span>
-                            <strong></strong> Orang
+                            <strong> {{ $maleTotal }} </strong> Orang
                             <span class="text-muted mb-5 d-inline-block"><i class="fa fa-female"></i> Jumlah Penduduk Perempuan sebanyak :</span>
-                            <strong></strong> Orang
+                            <strong> {{ $femaleTotal }} </strong> Orang
                             <h4 class="mb-0">Total Penduduk :</h4>
                             {{-- <h2 class="text-muted">{{ (int)round($sumCount[4]->jumlahPenduduk) }} Orang</h2> --}}
                             <ul class="list-unstyled mt-5">
