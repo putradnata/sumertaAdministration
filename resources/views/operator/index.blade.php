@@ -13,11 +13,11 @@
                     <div class="row">
                         <div class="col-xl-3">
                             <span class="text-muted mb-5 d-inline-block"><i class="fa fa-male"></i> Jumlah Penduduk Laki-laki sebanyak :</span>
-                            <strong>5</strong> Orang
+                            <strong></strong> Orang
                             <span class="text-muted mb-5 d-inline-block"><i class="fa fa-female"></i> Jumlah Penduduk Perempuan sebanyak :</span>
-                            <strong>5</strong> Orang
+                            <strong></strong> Orang
                             <h4 class="mb-0">Total Penduduk :</h4>
-                            <h2 class="text-muted">{{ (int)round($sumCount[4]->jumlahPenduduk) }} Orang</h2>
+                            {{-- <h2 class="text-muted">{{ (int)round($sumCount[4]->jumlahPenduduk) }} Orang</h2> --}}
                             <ul class="list-unstyled mt-5">
                                 <li class="text-muted">
                                     <i class="fa fa-clock-o pr-2"></i> Data from January
@@ -57,19 +57,19 @@
                                 <div class="col-12 col-xl-4 col-md-6 text-muted mt-xl-4">
                                     <ul class="list-unstyled f12">
                                         <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2" style="color: #acf5fe"></i> {{ (int)round($sumCount[0]->jumlahPenduduk / $sumCount[4]->jumlahPenduduk * 100) }} %
+                                            <i class="fa fa-circle pr-2" style="color: #acf5fe"></i> {{ (int)round($sumCount[0]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100) }} %
                                             <span class="float-right">{{ $banjarObject[0] }}</span>
                                         </li>
                                         <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2" style="color: #f79490"></i> {{ (int)round($sumCount[1]->jumlahPenduduk / $sumCount[4]->jumlahPenduduk * 100) }} %
+                                            <i class="fa fa-circle pr-2" style="color: #f79490"></i> {{ (int)round($sumCount[1]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100) }} %
                                             <span class="float-right">{{ $banjarObject[1] }}</span>
                                         </li>
                                         <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2 " style="color: #f79490"></i> {{ (int)round($sumCount[2]->jumlahPenduduk / $sumCount[4]->jumlahPenduduk * 100) }}%
+                                            <i class="fa fa-circle pr-2 " style="color: #f79490"></i> {{ (int)round($sumCount[2]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100) }}%
                                             <span class="float-right">{{ $banjarObject[2] }}</span>
                                         </li>
                                         <li class="list-widget-border mb-3 pb-3">
-                                            <i class="fa fa-circle pr-2 " style="color: #acf5fe"></i> {{ (int)round($sumCount[3]->jumlahPenduduk / $sumCount[4]->jumlahPenduduk * 100) }}%
+                                            <i class="fa fa-circle pr-2 " style="color: #acf5fe"></i> {{ (int)round($sumCount[3]->jumlahPenduduk / $sumCount[3]->jumlahPenduduk * 100) }}%
                                             <span class="float-right">{{ $banjarObject[3] }}</span>
                                         </li>
                                         <li class="list-widget-border mb-3 pb-3">
@@ -81,7 +81,6 @@
                                             <span class="float-right">{{ $banjarObject[5] }}</span>
                                         </li>
                                     </ul>
-
                                 </div>
                             </div>
                         </div>

@@ -21,6 +21,22 @@ Route::group(['middleware' => 'operator'], function () {
         //Website Manager
         Route::resource('/manajer-website','WebsiteContentController');
 
+        //Jenis surat
+        Route::resource('data-surat','JenisSuratController');
+
+        //Incoming Letter
+        Route::get('surat-masuk','OperatorLetterActivity@incomingLetter')->name('incomingLetter.incoming');
+
+        //letter management
+            //operator Process
+            Route::get('surat-masuk/op/{id}','OperatorLetterActivity@OperatorProcess')->name('operator.process');
+            //kelian banjar dinas process
+            Route::get('surat-masuk/kb/{id}','OperatorLetterActivity@KelianBanjarProcess')->name('kelian.process');
+            //Kepala DEsa Process
+            Route::get('surat-masuk/kd/{id}','OperatorLetterActivity@KepalaDesaProcess')->name('kades.process');
+            //Completed process
+            Route::get('surat-masuk/cm/{id}','OperatorLetterActivity@CompletedProcess')->name('process.completed');
+
     });
 });
 
@@ -38,6 +54,14 @@ Route::group(['middleware' => 'penduduk'], function () {
 
         //fetchDataPenduduk
         Route::get('/fetchData/{id}','HomeController@fetchData');
+
+        //pengajuan surat
+        Route::resource('pengajuan-surat','PengajuanSuratController');
+
+        Route::get('/data-surat/lacak-surat','PendudukLetterActivity@LetterTracking')->name('letterTracking.tracking');
+
+        //fetchSurat
+        Route::get('/data-surat/fetchData/{id}','PendudukLetterActivity@LetterFilter');
     });
 });
 
@@ -51,7 +75,7 @@ Route::group(['middleware' => 'penduduk'], function () {
 
 Auth::routes();
 
-// Route::get('/', 'HomeController@index');
+// // Route::get('/', 'HomeController@index');
 
 Route::get('/','WebsiteController@index');
 
@@ -63,5 +87,7 @@ Route::get('/staging/test', function(){
 });
 
 Route::get('/staging/surat',function(){
-    return view('layouts.surat');
+    return view('penduduk/data-surat.letter-tracking');
 });
+
+// Route::get('/staging/surat-masuk','OperatorLetterActivity@incomingLetter');

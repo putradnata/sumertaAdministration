@@ -110,9 +110,6 @@
                                         <a href="#">Penduduk Pindah</a>
                                     </li>
                                     <li>
-                                        <a href="#">Penduduk Pendatang</a>
-                                    </li>
-                                    <li>
                                         <a href="#">Penduduk Pindah</a>
                                     </li>
                                 </ul>
@@ -133,8 +130,8 @@
                             <span class="nav-link-text">Data Surat</span>
                         </a>
                         <ul class="sidenav-second-level collapse" id="layouts" data-parent="#accordion">
-                            <li> <a href="#">Surat Masuk</a></li>
-                            <li> <a href="#">Jenis Surat</a> </li>
+                            <li> <a href="{{ route('incomingLetter.incoming') }}">Surat Masuk</a></li>
+                            <li> <a href="{{ route('data-surat.index') }}">Jenis Surat</a> </li>
                             <li> <a href="#">Jurnal Surat</a></li>
                         </ul>
                     </li>
@@ -153,7 +150,7 @@
                 <ul class="navbar-nav left-side-nav" id="accordion">
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Halaman Utama">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/penduduk">
                             <i class="vl_dashboard"></i>
                             <span class="nav-link-text">Halaman Utama</span>
                         </a>
@@ -171,12 +168,12 @@
                     </li>
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profil Penduduk">
-                        <a class="nav-link nav-link-collapse " data-toggle="collapse" data-target="#layouts">
+                        <a class="nav-link nav-link-collapse " data-toggle="collapse" data-target="#suratt">
                             <i class="icon-envelope-open "></i>
                             <span class="nav-link-text">Data Surat</span>
                         </a>
-                        <ul class="sidenav-second-level collapse" id="layouts" data-parent="#accordion">
-                            <li> <a href="#">Pengajuan Surat</a></li>
+                        <ul class="sidenav-second-level collapse" id="suratt" data-parent="#accordion">
+                            <li> <a href="{{ route('letterTracking.tracking') }}">Lacak Surat</a></li>
                             <li> <a href="#">Jurnal Surat</a> </li>
                         </ul>
                     </li>
@@ -199,18 +196,21 @@
             <!--header rightside links-->
             @if (Auth::user()->jabatan == 'o')
                 <?php
+                    //current date
+                    $today = \Carbon\Carbon::now()->format('Y-m-d');
+
                     $selectSurat = DB::table('pengajuan_surat')
                                     ->join('penduduk','pengajuan_surat.NIK','=','penduduk.NIK')
                                     ->join('jenis_surat','pengajuan_surat.idJenisSurat','=','jenis_surat.id')
                                     ->where('status','=','-1')
+                                    ->where('pengajuan_surat.created_at','like','%'.$today.'%')
+                                    ->orderByDesc('pengajuan_surat.created_at')
                                     ->select(
                                         'pengajuan_surat.*',
                                         'penduduk.nama as namaPenduduk',
                                         'jenis_surat.jenis as jenisSurat'
                                     )
                                     ->get();
-
-
                             ?>
 
             <ul class="navbar-nav header-links ml-auto hide-arrow">

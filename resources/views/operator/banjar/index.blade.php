@@ -25,6 +25,10 @@
                     <div class="alert alert-success successAlert">
                         <p>{{ Session::get('success') }}</p>
                     </div>
+                @elseif(Session::has('error'))
+                    <div class="alert alert-success errorAlert">
+                        <p>{{ Session::get('error') }}</p>
+                    </div>
                 @endif
             </div>
             <div class="card-body">
@@ -33,12 +37,20 @@
 
                 <table id="tableBanjar" class="table table-bordered table-striped" cellspacing="0">
                     <thead>
-                    <tr style="text-align:center;">
-                        <th>No.</th>
-                        <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>Aksi</th>
-                    </tr>
+                        <tr style="text-align:center;">
+                            <th>No.</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th colspan="3" style="width:10%;">Aksi</th>
+                        </tr>
+                        <tr style="display:none;">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($banjar as $bjr => $bjrList)
@@ -49,9 +61,19 @@
 
                                 <td style="text-align:center;">
                                     <a href="#" class="btn btn-primary btn-sm" title="Detail" data-toggle="modal" data-id="{{ $bjrList->id }}" data-target="#banjarModal"><i class="fa fa-eye"></i></a>
-                                    <a href="{{ route('banjar.edit',$bjrList->id) }}" class="btn btn-warning btn-sm" title="Update"><i class="fa fa-sticky-note-o"></i></a>
+                                </td>
 
-                                    <a href="#" class="btn btn-danger btn-sm delete-data" data-id="{{ $bjrList->id }}" title="Hapus"><i class="fa fa-trash"></i></a>
+                                <td style="text-align:center;">
+                                    <a href="{{ route('banjar.edit',$bjrList->id) }}" class="btn btn-warning btn-sm" title="Update"><i class="fa fa-sticky-note-o"></i></a>
+                                </td>
+
+                                <td style="text-align:center;">
+                                    <form method="POST" action="{{ route('banjar.destroy',$bjrList->id) }}">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="DELETE">
+
+                                        <button class="btn btn-danger btn-sm" title="Hapus" type="submit"><i class="fa fa-trash"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -107,41 +129,19 @@
 </script>
 <!-- End -->
 
-<!-- Init Swal -->
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".delete-data").on('click',function(){
-
-            var idBanjar = $(this).data('id');
-
-            Swal.fire({
-            title: 'Apakah anda Yakin?',
-            text: "Anda akan menghapus data Banjar "+idBanjar,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Lanjutkan'
-            }).then((result) => {
-            if (result.value) {
-                Swal.fire(
-                'Data Terhapus!',
-                'Data Penduduk Telah Terhapus.',
-                'success'
-                )
-            }
-            })
-
-            });
-        });
-
-</script>
-
 <!-- Alert Fade out -->
 <script>
     $(document).ready(function(){
         $(".successAlert").fadeTo(2000, 500).slideUp(500, function(){
             $(".successAlert").slideUp(500);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $(".errorAlert").fadeTo(2000, 500).slideUp(500, function(){
+            $(".errorAlert").slideUp(500);
         });
     });
 </script>

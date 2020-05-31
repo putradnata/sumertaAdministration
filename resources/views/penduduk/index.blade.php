@@ -11,10 +11,20 @@
                 <div class="custom-title-wrap bar-primary">
                     <div class="custom-title">Pengajuan Surat Surat</div>
                 </div>
+                @if (Session::has('success'))
+                    <div class="alert alert-success successAlert">
+                        <p>{{ Session::get('success') }}</p>
+                    </div>
+                @elseif(Session::has('error'))
+                    <div class="alert alert-success errorAlert">
+                        <p>{{ Session::get('error') }}</p>
+                    </div>
+                @endif
             </div>
             <div class="card-body">
                 <p class="text-muted">Silahkan ajukan surat melalui form berikut.</p>
-                <form method="POST">
+                <form method="POST" action="{{ route('pengajuan-surat.store') }}">
+                    @csrf
                     <div class="form-group">
                         <label for="pemohon">Pemohon</label>
                         <select class="form-control" id="pemohon" name="pemohon">
@@ -65,13 +75,13 @@
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-purple">Ajukan</button>
-                        <button type="reset" class="btn btn-outline-secondary">Batalkan</button>
+                        <button type="reset" class="btn btn-outline-secondary reset">Batalkan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- Status Surat -->
+    {{-- <!-- Status Surat -->
     <div class="col-xl-6 col-md-6">
         <div class="card card-shadow mb-4">
             <div class="card-header border-0">
@@ -84,68 +94,25 @@
             </div>
             <div class="card-body">
                 <ul class="list-unstyled base-timeline activity-timeline">
-                    <li class="">
-                        <div class="timeline-icon">
-                            <img src="{{ asset('newBackAssets/img/avatar/avatar1.jpg')}}" alt=""/>
-                        </div>
-                        <div class="act-time">Today</div>
-                        <div class="base-timeline-info">
-                            <a href="#">John123</a> Successfully purchased item#26
-                        </div>
-                        <small class="text-muted">
-                            28 mins ago
-                        </small>
-                    </li>
-                    <li class="">
-                        <div class="timeline-icon bg-turquoise">
-                            <i class="fa fa-download"></i>
-                        </div>
-                        <div class="base-timeline-info">
-                            <a href="#" class="text-danger">Farnandez</a> placed the order for accessories
-                        </div>
-                        <small class="text-muted">
-                            2 days ago
-                        </small>
-                    </li>
-                    <li class="">
-                        <div class="timeline-icon bg-info">
-                            <i class="fa fa-file-image-o"></i>
-                        </div>
-                        <div class="act-time">Yesterday</div>
-                        <div class="base-timeline-info">
-                            User <a href="#" class="text-purple">Lisa Maria</a> checked out from the market
-                        </div>
-                        <small class="text-muted">
-                            12 mins ago
-                        </small>
-                    </li>
-                    <li class="">
-                        <div class="timeline-icon">
-                            <img src="{{ asset('newBackAssets/img/avatar/avatar2.jpg')}}" alt=""/>
-                        </div>
-                        <div class="base-timeline-info">
-                            <a href="#" class="text-info">Charlie Johnson  </a> joined DashLab last week.
-                        </div>
-                        <small class="text-muted">
-                            3 days ago
-                        </small>
-                    </li>
-                    <li class="">
-                        <div class="timeline-icon">
-                            <i class="fa fa-plus"></i>
-                        </div>
-                        <div class="act-time">29 January</div>
-                        <div class="base-timeline-info">
-                            User <a href="#" class="text-warning">Lisa Maria</a> checked out from the market
-                        </div>
-                        <small class="text-muted">
-                            15 mins ago
-                        </small>
-                    </li>
+                    @if ($letterTracking == null)
+                        <li class="">
+                            Saat ini belum ada surat yang diajukan.
+                        </li>
+                    @elseif($letterTracking->status == '-1')
+                        @include('penduduk/tracking-components.delivered')
+                    @elseif($letterTracking->status == 'D')
+                        @include('penduduk/tracking-components.operator-received')
+                    @elseif($letterTracking->status == 'KBD')
+                        @include('penduduk/tracking-components.kelian-process')
+                    @elseif($letterTracking->status == 'KD')
+                        @include('penduduk/tracking-components.kepala-desa-process')
+                    @elseif($letterTracking->status == 'S')
+                        @include('penduduk/tracking-components.completed')
+                    @endif
                 </ul>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection
 

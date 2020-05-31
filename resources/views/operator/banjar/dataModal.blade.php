@@ -3,12 +3,22 @@
         <tr>
             <th style="width:30%;">Nama Banjar</th>
             <td>:</td>
-            <td>{{ $banjar->nama }}</td>
+            <td>{{ $banjar->namabanjar }}</td>
         </tr>
         <tr>
             <th>Alamat</th>
             <td>:</td>
             <td>{{ $banjar->alamat }}</td>
+        </tr>
+        <tr>
+            <th>Nama Kelian Dinas</th>
+            <td>:</td>
+            <td>{{ $banjar->namakelian }}</td>
+        </tr>
+        <tr>
+            <th>Nomor Telepon Kelian</th>
+            <td>:</td>
+            <td>{{ $banjar->noTelp }}</td>
         </tr>
         <tr>
             <th>Keterangan</th>

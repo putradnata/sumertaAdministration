@@ -20,6 +20,8 @@ class Banjar extends Model
             'nama' => '',
             'alamat' => '',
             'keterangan' => '',
+            'kelian' => '',
+            'noTelp' => '',
         ];
     }
 
