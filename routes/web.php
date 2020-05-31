@@ -55,6 +55,9 @@ Route::group(['middleware' => 'operator'], function () {
         //store penduduk meninggal
         Route::post('/penduduk-meninggal/store','PendudukController@storePendudukMeninggal')->name('penduduk-meninggal.store');
 
+        //show detail penduduk meninggal
+        Route::get('/penduduk-meninggal/show/{id}','PendudukController@showPendudukMeninggal')->name('penduduk-meninggal.show');
+
     });
 });
 

@@ -42,6 +42,7 @@ class PengajuanSuratController extends Controller
 
         $request->validate([
             'fileKK' => 'required|mimes:jpeg,png,jpg,pdf|max:4096',
+            'keperluan'=> 'required',
         ]);
 
         //get nik
@@ -107,6 +108,7 @@ class PengajuanSuratController extends Controller
                 'NIK' => $nik,
                 'idJenisSurat' => $request->suratDiajukan,
                 'idBanjar' => $findBanjar->id,
+                'keperluan' => $request->keperluan,
                 'status' => '-1',
                 'pathKK' => $fileKKName,
             ];
@@ -169,6 +171,7 @@ class PengajuanSuratController extends Controller
                 'idJenisSurat' => $request->suratDiajukan,
                 'idBanjar' => $findBanjar->id,
                 'status' => '-1',
+                'keperluan' => $request->keperluan,
                 'pathKK' => $fileKKName,
             ];
 

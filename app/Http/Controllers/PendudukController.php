@@ -20,6 +20,7 @@ class PendudukController extends Controller
         $penduduk = DB::table('penduduk')
             ->join('banjar', 'penduduk.idBanjar', '=', 'banjar.id')
             ->select('penduduk.*', 'banjar.nama as namaBanjar')
+            ->where('penduduk.statusPenduduk','A')
             ->orderBy('penduduk.idBanjar', 'ASC')
             ->get();
 
@@ -337,6 +338,26 @@ class PendudukController extends Controller
         }else{
             return redirect('operator/penduduk-meninggal')->with('error','Terjadi Kesalahan Saat Menambah Data');
         }
+    }
+
+    public function showPendudukMeninggal($id){
+        $detailPendudukMeninggal = DB::table('penduduk')
+                                    ->join('detail_penduduk','penduduk.NIK','=','detail_penduduk.NIK')
+                                    ->join('banjar','penduduk.idBanjar','=','banjar.id')
+                                    ->select(
+                                        'penduduk.*',
+                                        'detail_penduduk.sebabKematian',
+                                        'detail_penduduk.padaTanggal as tanggalKematian',
+                                        'detail_penduduk.tanggalLapor',
+                                        'banjar.nama as namaBanjar'
+                                    )
+                                    ->where('penduduk.NIK',$id)
+                                    ->get();
+
+
+        return view('operator/kependudukan/penduduk-meninggal.show',[
+            'fetched' => $detailPendudukMeninggal
+        ])->render();
     }
 
 }

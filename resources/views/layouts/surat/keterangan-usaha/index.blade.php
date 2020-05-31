@@ -174,8 +174,7 @@ div.cls_009 {
         <div style="position:absolute;left:238.13px;top:549.87px" class="cls_005"><span class="cls_005">: Denpasar</span></div>
         <div style="position:absolute;left:124.70px;top:587.07px" class="cls_005"><span class="cls_005">Demikian surat
                 keterangan usaha ini kami buat agar dapat dipergunakan</span></div>
-        <div style="position:absolute;left:90.02px;top:603.63px" class="cls_005"><span class="cls_005">untuk melengkapi
-                administrasi Kredit Usaha Rakyat (KUR).</span></div>
+        <div style="position:absolute;left:90.02px;top:603.63px" class="cls_005"><span class="cls_005">untuk {{ $surat->keperluan }}.</span></div>
         <div style="position:absolute;left:90.02px;top:678.18px" class="cls_005"><span class="cls_005">Mengetahui</span>
         </div>
         <div style="position:absolute;left:345.19px;top:678.18px" class="cls_005"><span class="cls_005">Sumerta Kaja, {{ $tanggal->isoFormat('dddd, Do MMMM YYYY') }}

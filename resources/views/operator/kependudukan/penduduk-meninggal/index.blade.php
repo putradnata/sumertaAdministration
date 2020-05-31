@@ -66,7 +66,7 @@
                                 <td>{{ $pm->tempatLahir }}, {{$tanggal->isoFormat('Do MMMM YYYY')}}</td>
                                 <td>{{ $pm->namaBanjar }}</td>
                                 <td style="text-align:center;">
-                                    <a href="#" class="btn btn-primary btn-sm" id="detailPenduduk" title="Detail" data-id="{{ $pm->NIK }}" data-toggle="modal" data-target="#pendudukModal"><i class="fa fa-eye"></i></a>
+                                    <a href="#" class="btn btn-primary btn-sm" id="detailPenduduk" title="Detail" data-id="{{ $pm->NIK }}" data-toggle="modal" data-target="#pendudukMeninggalModal"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -113,9 +113,9 @@
         $("#pendudukMeninggalModal").on('show.bs.modal', function(e){
             var nikPassed = $(e.relatedTarget).data('id');
 
-            // $.get('/operator/kependudukan/'+nikPassed, function(data){
-            //     $(".modal-body").html(data);
-            // });
+            $.get('/operator/penduduk-meninggal/show/'+nikPassed, function(data){
+                $(".modal-body").html(data);
+            });
 
         });
     });

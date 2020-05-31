@@ -264,16 +264,6 @@
                         <span class="d-lg-none">Notification
                             <span class="badge badge-pill badge-warning">5 New</span>
                         </span>
-
-                        {{-- <div class="notification-alarm">
-                            <span class="wave wave-danger"></span>
-                            <span class="dot bg-danger"></span>
-                        </div> --}}
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right header-right-dropdown-width pb-0" aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header weight500">Notifikasi</h6>
-                        <div class="dropdown-divider mb-0"></div>
                         <?php
                             $getPenduduk = DB::table('penduduk')
                                             ->where('NIK',\Auth::user()->NIK)
@@ -292,6 +282,20 @@
                             ->orderByDesc('pengajuan_surat.created_at')
                             ->get();
                         ?>
+
+                        @if ($getAllLetter[0]->status == 'S')
+                            <div class="notification-alarm">
+                                <span class="wave wave-danger"></span>
+                                <span class="dot bg-danger"></span>
+                            </div>
+                        @endif
+
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right header-right-dropdown-width pb-0" aria-labelledby="alertsDropdown">
+                        <h6 class="dropdown-header weight500">Notifikasi</h6>
+                        <div class="dropdown-divider mb-0"></div>
+
                             @if ($getAllLetter->isEmpty())
                                 <a class="dropdown-item border-bottom">
                                     <span class="text-secondary">
@@ -307,6 +311,7 @@
                                 </a>
                             @else
                                 @foreach ($getAllLetter as $gAl)
+                                    @if ($gAl->status == 'S')
                                     <a class="dropdown-item border-bottom">
                                         <span class="text-secondary">
                                             <span class="weight500">
@@ -322,33 +327,9 @@
 
                                         </div>
                                     </a>
+                                @endif
                                 @endforeach
                             @endif
-                            {{-- <a class="dropdown-item border-bottom">
-                                <span class="text-secondary">
-                                    <span class="weight500">
-                                        Tidak Ada Notifikasi
-                                    </span>
-                                </span>
-                                <span class="small float-right text-muted"></span>
-
-                                <div class="dropdown-message f12">
-
-                                </div>
-                            </a> --}}
-
-
-                            {{-- <a class="dropdown-item border-bottom" href="#">
-                                <span class="text-primary">
-                                <span class="weight500">
-                                    <i class="vl_bell weight600 pr-2"></i>Weekly Update</span>
-                                </span>
-                                <span class="small float-right text-muted">03:14 AM</span>
-
-                                <div class="dropdown-message f12">
-                                    Ini Notifikasi Penduduk
-                                </div>
-                            </a> --}}
             @endif
 
 

@@ -27,6 +27,7 @@ class ProfileController extends Controller
 
         $selectKeluargaPenduduk = DB::table('penduduk')
                                 ->where('noKK',$noKKuser)
+                                ->orderByRaw("FIELD(kedudukanKeluarga , 'KK','I','AK','OT','FL')")
                                 ->get();
 
         $selectSuratPenduduk = DB::table('pengajuan_surat')

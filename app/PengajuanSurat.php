@@ -14,6 +14,7 @@ class PengajuanSurat extends Model
         'idJenisSurat',
         'idBanjar',
         'status',
+        'keperluan',
         'idUser',
         'pathKK'
     ];
