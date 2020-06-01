@@ -24,8 +24,8 @@
                     @endif --}}
                     <form></form>
                     @csrf
-                    <div class="row">
-                        <div class="form-group col-sm-6">
+
+                        <div class="form-group col-6">
                             <label for="namaLengkap">Nama Penduduk</label>
                             <select id="namaLengkap" class="form-control">
                                 <option hidden> ---</option>
@@ -34,7 +34,25 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+
+                        <div class="form-group col-2">
+                            <label for="tanggalPindah">Tanggal Pindah</label>
+                            <input type="text" class="form-control" name="tanggalPindah" id="tanggalPindah" readonly>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="alasanPindah">Alasan Kepindahan</label>
+                            <input type="text" class="form-control" name="alasanPindah">
+                        </div>
+
+                        <div class="form-group col-5">
+                            <label for="alamatPindah">Alamat Pindah</label>
+                            <textarea type="text" class="form-control" name="alamatPindah"></textarea>
+                        </div>
+
+                        <div class="form-group col-5">
+                            <label for="pengikut">Pengikut</label>
+                        </div>
 
 
                     <button class="btn btn-secondary reset" type="reset" data-dismiss="modal">Ulang</button>
@@ -61,7 +79,7 @@
 <!-- Init Zebra Date Picker -->
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#tanggalLahir").Zebra_DatePicker();
+        $("#tanggalPindah").Zebra_DatePicker();
     });
 </script>
 @endsection

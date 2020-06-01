@@ -103,6 +103,11 @@ class HomeController extends Controller
         ->where('statusPenduduk','A')
         ->count();
 
+        //sumAll
+        $sumAll = Penduduk::where('statusPenduduk','A')
+                            ->orderByDesc('created_at')
+                            ->first();
+
 
         return view('operator/index')
         ->with('valueMale',json_encode($valueMale))
@@ -116,7 +121,8 @@ class HomeController extends Controller
         ->with('sumCount',$sumCount)
         ->with('namaBanjar',$banjar)
         ->with('maleTotal',$SUMmale)
-        ->with('femaleTotal',$SUMfemale);
+        ->with('femaleTotal',$SUMfemale)
+        ->with('sumAll',$sumAll);
     }
 
     public function homePenduduk()
