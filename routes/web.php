@@ -58,6 +58,9 @@ Route::group(['middleware' => 'operator'], function () {
         //show detail penduduk meninggal
         Route::get('/penduduk-meninggal/show/{id}','PendudukController@showPendudukMeninggal')->name('penduduk-meninggal.show');
 
+        //show pengikut pindah
+        Route::get('/penduduk-pindah/fetchPengikut/{id}','PendudukPindahController@showPengikut');
+
     });
 });
 

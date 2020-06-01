@@ -22,12 +22,12 @@
                 <form method="POST" action="{{ route('kependudukan.update', $pendudukFind->NIK) }}">
                     @method('put')
                     @endif --}}
-                    <form></form>
+                <form method="POST" action="{{ route('penduduk-pindah.store') }}">
                     @csrf
 
                         <div class="form-group col-6">
                             <label for="namaLengkap">Nama Penduduk</label>
-                            <select id="namaLengkap" class="form-control">
+                            <select name="namaLengkap" id="namaLengkap" class="form-control">
                                 <option hidden> ---</option>
                                 @foreach ($penduduk as $pdk)
                                     <option value="{{ $pdk->NIK }}">{{ $pdk->nama }}</option>
@@ -50,8 +50,9 @@
                             <textarea type="text" class="form-control" name="alamatPindah"></textarea>
                         </div>
 
-                        <div class="form-group col-5">
+                        <div class="form-group col-12">
                             <label for="pengikut">Pengikut</label>
+                            <div id="pengikut" class="fetched-data"></div>
                         </div>
 
 
@@ -63,12 +64,6 @@
 @endsection
 
 @section('scriptPlace')
-<script type="text/javascript">
-    $(document).ready(function(){
-        // $("#detailPenduduk").attr('hidden',true);
-    });
-</script>
-
 {{-- init select for penduduk --}}
 <script type="text/javascript">
     $(document).ready(function(){
@@ -80,6 +75,19 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $("#tanggalPindah").Zebra_DatePicker();
+    });
+</script>
+
+{{-- change when kelaurga click --}}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#namaLengkap").change(function(){
+            var nikPassed = $("#namaLengkap").val();
+
+            $.get('/operator/penduduk-pindah/fetchPengikut/'+nikPassed, function(data){
+                $(".fetched-data").html(data);
+            });
+        });
     });
 </script>
 @endsection

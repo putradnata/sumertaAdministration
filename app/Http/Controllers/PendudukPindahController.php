@@ -43,7 +43,8 @@ class PendudukPindahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+
     }
 
     /**
@@ -96,5 +97,20 @@ class PendudukPindahController extends Controller
         setlocale(LC_TIME, 'IND');
 
         return $dt->formatLocalized('%e %B %Y'); // 3 September 2018
+    }
+
+    public function showPengikut($id){
+        $getnoKK = DB::table('penduduk')
+                        ->where('NIK',$id)
+                        ->first();
+
+        $pengikut = DB::table('penduduk')
+                        ->where('noKK',$getnoKK->noKK)
+                        ->whereNotIn('NIK',[$id])
+                        ->get();
+
+        return view('/operator/kependudukan/penduduk-pindah.fetchPengikut',[
+            'fetched' => $pengikut,
+        ])->render();
     }
 }
