@@ -107,7 +107,7 @@
                                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#multi_menu_2">Status Penduduk</a>
                                 <ul class="sidenav-third-level collapse" id="multi_menu_2">
                                     <li>
-                                        <a href="#">Penduduk Pindah</a>
+                                        <a href="{{ route('penduduk-pindah.index') }}">Penduduk Pindah</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('penduduk-meninggal.index') }}">Penduduk Meninggal</a>
@@ -283,12 +283,16 @@
                             ->get();
                         ?>
 
-                        @if ($getAllLetter[0]->status == 'S')
+                        {{-- @if ($getAllLetter->status == 'S')
                             <div class="notification-alarm">
                                 <span class="wave wave-danger"></span>
                                 <span class="dot bg-danger"></span>
                             </div>
-                        @endif
+                        @elseif($getAllLetter->isEmpty)
+                            <div class="notification-alarm">
+
+                            </div>
+                        @endif --}}
 
                     </a>
 
@@ -296,7 +300,7 @@
                         <h6 class="dropdown-header weight500">Notifikasi</h6>
                         <div class="dropdown-divider mb-0"></div>
 
-                            @if ($getAllLetter->isEmpty())
+                            @if ($getAllLetter == null)
                                 <a class="dropdown-item border-bottom">
                                     <span class="text-secondary">
                                         <span class="weight500">
@@ -309,6 +313,19 @@
 
                                     </div>
                                 </a>
+                            {{-- @elseif($getAllLetter->isEmpty())
+                                <a class="dropdown-item border-bottom">
+                                    <span class="text-secondary">
+                                        <span class="weight500">
+                                            Tidak Ada Notifikasi
+                                        </span>
+                                    </span>
+                                    <span class="small float-right text-muted"></span>
+
+                                    <div class="dropdown-message f12">
+
+                                    </div>
+                                </a> --}}
                             @else
                                 @foreach ($getAllLetter as $gAl)
                                     @if ($gAl->status == 'S')

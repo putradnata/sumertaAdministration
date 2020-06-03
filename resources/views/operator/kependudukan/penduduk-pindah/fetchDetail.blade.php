@@ -4,10 +4,9 @@
 
 @foreach ($fetched as $fetch)
 <?php
-    $tanggalKematian = Carbon::parse($fetch->tanggalKematian)->locale('id');
+    $tanggalPindah = Carbon::parse($fetch->tanggalPindah)->locale('id');
     $tanggalLapor = Carbon::parse($fetch->tanggalLapor)->locale('id');
 ?>
-
 <table class="table" name="detailPenduduk" id="detailPenduduk">
     <tr>
         <th>Nomor KK</th>
@@ -25,24 +24,31 @@
         <td>{{ $fetch->nama }}</td>
     </tr>
     <tr>
-        <th>Tanggal Kematian</th>
+        <th>Tanggal Pindah</th>
         <td>:</td>
-        <td>{{ $tanggalKematian->isoFormat('Do MMMM YYYY') }}</td>
+        <td>{{ $tanggalPindah->isoFormat('Do MMMM YYYY') }}</td>
     </tr>
     <tr>
-        <th>Sebab Kematian</th>
+        <th>Alamat Pindah</th>
         <td>:</td>
-        <td>{{ $fetch->sebabKematian }}</td>
+        <td>{{ $fetch->alamatPindah }}</td>
     </tr>
     <tr>
-        <th>Tanggal Lapor</th>
+        <th>Alasan Pindah</th>
         <td>:</td>
-        <td>{{ $tanggalLapor->isoFormat('dddd, Do MMMM YYYY') }}</td>
+        <td>{{ $fetch->alasanPindah }}</td>
     </tr>
+@endforeach
     <tr>
-        <th>Asal Banjar</th>
+        <th>Pengikut</th>
         <td>:</td>
-        <td>{{ $fetch->namaBanjar }}</td>
+        <td>
+        @for ($z = 0; $z < count($fetchPengikut); $z++)
+                <ul style="list-style: none; margin-left:-8%;">
+                    <li>{{ $fetchPengikut[$z]->nama }}</li>
+                </ul>
+        @endfor
+        </td>
+
     </tr>
 </table>
-@endforeach

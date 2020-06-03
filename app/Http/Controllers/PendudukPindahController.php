@@ -16,7 +16,24 @@ class PendudukPindahController extends Controller
      */
     public function index()
     {
+        $selectPendudukPindah = DB::table('penduduk')
+                                    ->join('detail_penduduk','penduduk.NIK','detail_penduduk.NIK')
+                                    ->join('banjar','penduduk.idBanjar','banjar.id')
+                                    ->select(
+                                        'penduduk.*',
+                                        'banjar.nama as namaBanjar',
+                                        'detail_penduduk.alasanPindah',
+                                        'detail_penduduk.alamatPindah',
+                                        'detail_penduduk.padaTanggal as tanggalPindah',
+                                        'detail_penduduk.tanggalLapor'
+                                        )
+                                    ->where('penduduk.StatusPenduduk','P')
+                                    ->groupBy('penduduk.noKK')
+                                    ->get();
 
+        return view('operator/kependudukan/penduduk-pindah.index',[
+            'pendudukPindah' => $selectPendudukPindah,
+        ]);
     }
 
     /**
@@ -43,7 +60,65 @@ class PendudukPindahController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+
+        // dd($request->all());
+
+        $data = [
+            'NIK' => $request->namaLengkap,
+            'noKK' => $request->noKK,
+            'alasanPindah' => $request->alasanPindah,
+            'alamatPindah' => $request->alamatPindah,
+            'padaTanggal' => $request->tanggalPindah,
+            'tanggalLapor' => \Carbon\Carbon::now()->format('Y-m-d'),
+            'created_at' => \Carbon\Carbon::now(),
+        ];
+
+
+        $insertPindah = DB::table('detail_penduduk')
+                            ->insert($data);
+
+        if($insertPindah){
+
+            $updateFirst = DB::table('penduduk')
+                                ->where('NIK',$request->namaLengkap)
+                                ->update([
+                                    'statusPenduduk' => 'P',
+                                ]);
+
+            if($updateFirst){
+                $pengikut = $request->pindah;
+
+                for($x=0; $x<count($pengikut); $x++){
+                    $insertData = DB::table('detail_penduduk')
+                                    ->insert([
+                                        'NIK' => $pengikut[$x],
+                                        'noKK' => $request->noKK,
+                                        'alasanPindah' => $request->alasanPindah,
+                                        'alamatPindah' => $request->alamatPindah,
+                                        'padaTanggal' => $request->tanggalPindah,
+                                        'tanggalLapor' => \Carbon\Carbon::now()->format('Y-m-d'),
+                                        'created_at' => \Carbon\Carbon::now(),
+                                    ]);
+                }
+
+                if($insertData){
+                    for($x=0; $x<count($pengikut); $x++){
+                        $updatePengikut = DB::table('penduduk')
+                                        ->where('NIK',$pengikut[$x])
+                                        ->update([
+                                            'statusPenduduk' => 'P'
+                                        ]);
+                    }
+
+                    if($updatePengikut){
+                        return redirect('operator/penduduk-pindah')->with('success','Data Berhasil Ditambahkan');
+                    }
+                }
+            }
+
+        }else{
+            return redirect('/operator/penduduk-pindah.index')->with('error','Terjadi Kesalahan Saat Menambah Data');
+        }
 
     }
 
@@ -53,9 +128,45 @@ class PendudukPindahController extends Controller
      * @param  \App\PendudukPindah  $pendudukPindah
      * @return \Illuminate\Http\Response
      */
-    public function show(PendudukPindah $pendudukPindah)
+    public function show($id)
     {
-        //
+        $getnoKK = DB::table('penduduk')
+                        ->where('NIK',$id)
+                        ->first();
+
+        $detailPendudukPindah = DB::table('penduduk')
+                        ->join('detail_penduduk','penduduk.NIK','=','detail_penduduk.NIK')
+                        ->join('banjar','penduduk.idBanjar','=','banjar.id')
+                        ->select(
+                            'penduduk.*',
+                            'detail_penduduk.alasanPindah',
+                            'detail_penduduk.padaTanggal as tanggalPindah',
+                            'detail_penduduk.tanggalLapor',
+                            'detail_penduduk.alamatPindah',
+                            'banjar.nama as namaBanjar'
+                        )
+                        ->where('detail_penduduk.NIK',$id)
+                        ->get();
+
+        $detailPengikutPindah = DB::table('penduduk')
+                                    ->join('detail_penduduk','penduduk.NIK','=','detail_penduduk.NIK')
+                                    ->join('banjar','penduduk.idBanjar','=','banjar.id')
+                                    ->select(
+                                        'penduduk.*',
+                                        'detail_penduduk.alasanPindah',
+                                        'detail_penduduk.padaTanggal as tanggalPindah',
+                                        'detail_penduduk.tanggalLapor',
+                                        'detail_penduduk.alamatPindah',
+                                        'banjar.nama as namaBanjar'
+                                    )
+                                    ->where('detail_penduduk.noKK',$getnoKK->noKK)
+                                    ->whereNotIn('detail_penduduk.NIK',[$id])
+                                    ->get();
+
+        return view('operator/kependudukan/penduduk-pindah.fetchDetail',[
+            'fetched' => $detailPendudukPindah,
+            'fetchPengikut' => $detailPengikutPindah,
+        ])->render();
     }
 
     /**
@@ -106,6 +217,7 @@ class PendudukPindahController extends Controller
 
         $pengikut = DB::table('penduduk')
                         ->where('noKK',$getnoKK->noKK)
+                        ->where('statusPenduduk','A')
                         ->whereNotIn('NIK',[$id])
                         ->get();
 

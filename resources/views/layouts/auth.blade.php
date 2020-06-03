@@ -10,11 +10,7 @@
     <link rel="icon" type="image/png" href="{{ asset('newBackAssets/img/favicon.html')}}">
 
     <title>
-        @if (Route::has('register'))
-            Daftar Pengguna
-        @else
-            Masuk
-        @endif
+        @yield('addressTitle')
     </title>
 
     <!--web fonts-->
@@ -86,7 +82,7 @@
                             <img class="pr-3" style="width: 25%;" src="{{ asset('newBackAssets/img/sumertakajaLogo.png')}}" srcset="{{ asset('newBackAssets/img/sumertakajaLogo@2x.png 2x')}}" alt="">
                         </a>
                         <h1 class="text-white">Selamat Datang</h1>
-                        <p>Sistem Informasi Kependudukan Desa Adat Sumerta</p>
+                        <p>Sistem Informasi Administrasi Kependudukan Desa Adat Sumerta</p>
                     </div>
                 </div>
                 <!--/login promo-->

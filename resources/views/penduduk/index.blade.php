@@ -39,6 +39,7 @@
                     <div class="form-group">
                         <label for="suratDiajukan">Surat yang Diajukan</label>
                         <select class="form-control" id="suratDiajukan" name="suratDiajukan">
+                            <option hidden> ---</option>
                             @foreach ($surat as $jenisSurat)
                                 <option value="{{ $jenisSurat->id }}">{{ $jenisSurat->jenis }}</option>
                             @endforeach

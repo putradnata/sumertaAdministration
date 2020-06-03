@@ -1,5 +1,7 @@
 @extends('layouts.auth')
 
+@section('addressTitle','Login')
+
 @section('loginForm')
 <form method="POST" action="{{ route('login') }}">
     @csrf

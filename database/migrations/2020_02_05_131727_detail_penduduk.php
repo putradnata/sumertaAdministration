@@ -15,6 +15,7 @@ class DetailPenduduk extends Migration
     {
         Schema::create('detail_penduduk', function (Blueprint $table) {
             $table->string('NIK', 16)->primary();
+            $table->string('noKK',16);
             $table->string('alasanPindah')->nullable();
             $table->string('alamatPindah')->nullable();
             $table->string('sebabKematian')->nullable();

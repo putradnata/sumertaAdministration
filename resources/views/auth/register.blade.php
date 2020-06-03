@@ -1,5 +1,7 @@
 @extends('layouts.auth')
 
+@section('addressTitle','Daftar Pengguna')
+
 @section('loginForm')
 <form method="POST" action="{{ route('register') }}">
     @csrf
